@@ -4,76 +4,68 @@ import {
   Text,
   View,
   Button,
-
+  StyleSheet,
+  Image
 } from 'react-native';
-import { TabNavigator , StackNavigator } from "react-navigation";
+import { TabNavigator , StackNavigator, DrawerNavigator } from "react-navigation";
 
-class RecentChatsScreen extends React.Component {
-  render() {
-    return (
-        <View>
-          <Text>List of recent chats</Text>
-          <Button
-            onPress={() => this.props.navigation.navigate('Chat', { user: 'Lucy' })}
-            title="Chat with Lucy"
-          />
-        </View>
-      )
-  }
-}
-
-class AllContactsScreen extends React.Component {
-  render() {
-    return (
-        <View>
-          <Text>List of recent chats</Text>
-          <Button
-            onPress={() => this.props.navigation.navigate('Chat', { user: 'dd' })}
-            title="Chat with dd"
-          />
-        </View>
-      )
-  }
-}
-
-class HomeScreen extends React.Component {
+class MyHomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Welcome',
+    drawerLabel: 'Home',
+    drawerIcon: ({ tintColor }) => (
+      <Image
+        style={[styles.icon, {tintColor: tintColor}]}
+      />
+    ),
   };
-  render() {
-    return <Text>Hello, Navigation!</Text>;
-  }
-}
 
-class ChatScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Chat with Lucy',
-  };
   render() {
     return (
-      <View>
-        <Text>Chat with Lucy</Text>
-      </View>
+      <Button
+        onPress={() => this.props.navigation.navigate('Notifications')}
+        title="Go to notifications"
+      />
     );
   }
 }
-ChatScreen.navigationOptions = {
-  headerBackTitle:'Back'
+
+class MyNotificationsScreen extends React.Component {
+  static navigationOptions = {
+    drawerLabel: 'Notifications',
+    drawerIcon: ({ tintColor }) => (
+      <Image
+        style={[styles.icon, {tintColor: tintColor}]}
+      />
+    ),
+  };
+
+  render() {
+    return (
+      <Button
+        onPress={() => this.props.navigation.goBack()}
+        title="Go back home"
+      />
+    );
+  }
 }
 
-const MainScreenNavigator = TabNavigator({
-  Recent: { screen: RecentChatsScreen },
-  All: { screen: AllContactsScreen },
-});
-MainScreenNavigator.navigationOptions = {
-  headerTitle:'dd',
-};
-const SimpleApp = StackNavigator({
-  Home: { screen: MainScreenNavigator },
-  Chat: { screen: ChatScreen },
+const styles = StyleSheet.create({
+  icon: {
+    width: 24,
+    height: 24,
+  },
 });
 
+const MyApp = DrawerNavigator({
+  Home: {
+    screen: MyHomeScreen,
+  },
+  Notifications: {
+    screen: MyNotificationsScreen,
+  },
+});
 
 
 
-AppRegistry.registerComponent('reactNativeBlog', () => SimpleApp);
+
+AppRegistry.registerComponent('reactNativeBlog', () => MyApp);
