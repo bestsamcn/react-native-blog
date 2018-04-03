@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 
-export default class reactNativeBlog extends Component {
+export default class ReactNativeBlog extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('reactNativeBlog', () => reactNativeBlog);
+AppRegistry.registerComponent('ReactNativeBlog', () => ReactNativeBlog);

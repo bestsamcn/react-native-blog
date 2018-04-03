@@ -1,36 +1,18 @@
 import React from 'react';
-import {
-	StackNavigator,
-} from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
+import { Button, View, Text } from 'react-native';
 
 
-const App = StackNavigator({
-	Main: {
-		screen: MainScreen
-	},
-	Profile: {
-		screen: ProfileScreen
-	},
-});
-
-class MainScreen extends React.Component {
-	static navigationOptions = {
-		title: 'Welcome',
-	};
-	render() {
-		const {
-			navigate
-		} = this.props.navigation;
-		return ( < Button title = "Go to Jane's profile"
-			onPress = {
-				() =>
-				navigate('Profile', {
-					name: 'Jane'
-				});
-			}
-			/>
-		);
+class Home extends React.Component{
+	constructor(props){
+		super(props);
+	}
+	render(){
+		return(
+			<View>
+				<Text>Hello Word</Text>
+			</View>		
+		)
 	}
 }
-
-export default App;
+export default Home;
