@@ -1,2 +1,2 @@
-# react-native-blog
+# React-Native-Blog
 ...
