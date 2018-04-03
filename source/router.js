@@ -1,11 +1,25 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
 
-import { Home } from './views';
+import { Home, About } from './views';
 
 const MainNavigation = StackNavigator(
 	{
-		Home:{screen: Home}
+		Home:{
+			screen: Home,
+			navigationOptions:{
+				title:'首页',
+				headerTitle:'首页',
+	            headerBackTitle:'',
+			}
+		},
+		About:{
+			screen: About,
+			navigationOptions:{
+			headerTitle:'关于',
+            headerBackTitle:'',
+			}
+		}
 	},
 	{
 		headerMode: 'none',
