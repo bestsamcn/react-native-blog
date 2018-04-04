@@ -3,7 +3,7 @@ import React from 'react'
 import dva from 'dva/mobile'
 import Router from './router'
 
-import globalModel from './models/global';
+import _models from './models';
 
 const app = dva({
 	onError(e) {
@@ -11,7 +11,7 @@ const app = dva({
 	}
 });
 
-app.model(globalModel);
+_models(app);
 app.router(() => <Router />)
 
 export default () => {

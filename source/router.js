@@ -1,34 +1,63 @@
 import React from 'react';
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, TabNavigator } from 'react-navigation';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Home, About, Message } from './views';
 
-import { Home, About } from './views';
-
-const MainNavigation = StackNavigator(
+const MainNavigation = TabNavigator(
 	{
 		Home:{
 			screen: Home,
 			navigationOptions:{
 				title:'首页',
-				headerTitle:'首页',
-	            headerBackTitle:'',
+				tabBarIcon:({focused, tintColor})=>(
+					<Icon name="header" size={20} color={focused ? "#1abc9c" : "#999"} />
+				)
 			}
 		},
 		About:{
 			screen: About,
 			navigationOptions:{
-			headerTitle:'关于',
-            headerBackTitle:'',
+				title:'关于',
+				tabBarIcon:({focused, tintColor})=>(
+					<Icon name="font" size={20} color={focused ? "#1abc9c" : "#999"} />
+				)
+			}
+		},
+		Message:{
+			screen: Message,
+			navigationOptions:{
+				title:'留言',
+				tabBarIcon:({focused, tintColor})=>(
+					<Icon name="bold" size={20} color={focused ? "#1abc9c" : "#999"} />
+				)
 			}
 		}
 	},
 	{
-		headerMode: 'none',
+		animationEnabled: false,
+		swipeEnabled:true,
+		tabBarPosition:'bottom',
+		backBehavior:false,
         mode: 'modal',
-        navigationOptions: {
-            cardStack: {
-                gesturesEnabled: false,
-            }
-        }
+        tabBarOptions: {
+        	pressColor:'#333',
+        	pressOpacity:0.8,
+	        activeTintColor: '#1abc9c', // 文字和图片选中颜色
+	        inactiveTintColor: '#999', // 文字和图片默认颜色
+	        showIcon: true, // android 默认不显示 icon, 需要设置为 true 才会显示
+	        indicatorStyle: {height: 1}, // android 中TabBar下面会显示一条线，高度设为 0 后就不显示线了， 不知道还有没有其它方法隐藏？？？
+	        style: {
+	            backgroundColor: '#fff', // TabBar 背景色
+	            height:50,
+	            borderStyle:'solid',
+	            borderTopColor:'#f1f1f1',
+	            borderTopWidth:1
+	        },
+	        labelStyle: {
+	            fontSize: 12, // 文字大小,
+	            marginTop: 0
+	        }
+	    }
 	}
 )
 
@@ -41,4 +70,9 @@ export default class Router extends React.Component{
 	render(){
 		return <MainNavigation />
 	}
+}
+
+
+export const routerReducer = (state, action={})=>{
+	return MainNavigation.router.getStateForAction(action, state);
 }
