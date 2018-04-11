@@ -1,20 +1,23 @@
 import React from 'react';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Home, About, Message } from './views';
+import { About, Message } from '@/views';
+import HomeStack from '@/views/home';
+import WebScreen from '@/views/Webview';
 
-const MainNavigation = TabNavigator(
+const TabNavigation = TabNavigator(
 	{
-		Home:{
-			screen: Home,
+		HomeTab:{
+			screen: HomeStack,
 			navigationOptions:{
 				title:'首页',
 				tabBarIcon:({focused, tintColor})=>(
 					<Icon name="header" size={20} color={focused ? "#1abc9c" : "#999"} />
-				)
+				),
+				header:null
 			}
 		},
-		About:{
+		AboutTab:{
 			screen: About,
 			navigationOptions:{
 				title:'关于',
@@ -23,7 +26,7 @@ const MainNavigation = TabNavigator(
 				)
 			}
 		},
-		Message:{
+		MessageTab:{
 			screen: Message,
 			navigationOptions:{
 				title:'留言',
@@ -61,7 +64,26 @@ const MainNavigation = TabNavigator(
 	}
 )
 
-
+const MainNavigation = StackNavigator(
+	{
+		Tab:{
+			screen:TabNavigation,
+			navigationOptions:()=>({
+				header:null
+			})
+		},
+		web:{
+			screen:WebScreen,
+			path:'webview/:id', 
+			navigationOptions:()=>({
+				headerTitle:'文章详情'
+			})
+		}
+	},
+	{
+		initialRouteName:'Tab',
+	}
+)
 
 export default class Router extends React.Component{
 	constructor(props){

@@ -4,15 +4,17 @@ import { getArticleList } from '../services/article';
 export default {
 	namespace:'home',
 	state:{
-		articleList:[]
+		articleList:[],
+		loading:false
 	},
 	subscriptions:{
 
 	},
 	effects:{
 		*getArticleList({params}, {call, put, select}){
-			let res = yield call(getArticleList, {pageIndex:1, pageSize:5});
-			yield put({type:'setState', payload:{articleList:res.data}});
+			yield put({type:'setState', payload:{loading:true}});
+			let res = yield call(getArticleList, {pageIndex:1, pageSize:10});
+			yield put({type:'setState', payload:{articleList:res.data, loading:false}});
 		}
 	},
 	reducers:{
