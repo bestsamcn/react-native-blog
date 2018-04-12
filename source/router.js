@@ -42,6 +42,7 @@ const TabNavigation = TabNavigator(
 		tabBarPosition:'bottom',
 		backBehavior:false,
         mode: 'modal',
+        lazy:false,
         tabBarOptions: {
         	pressColor:'#333',
         	pressOpacity:0.8,
