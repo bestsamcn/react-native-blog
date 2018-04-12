@@ -5,13 +5,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'dva/mobile';
 import { Loading } from '@/components/common';
 import { headerStyles } from '@/styles/home';
-import { margin, color } from '@/styles/base';
+import { margin, color, font, flex } from '@/styles/base';
 
 @connect(state=>({...state}))
 class Home extends React.Component{
 	static navigationOptions = ()=>({
 		headerLeft:<Text style={headerStyles.logo}><Icon name='bold' style={margin.right5} size={30} color='#1abc9c'/>est</Text>,
-		headerRight:<Icon name='search' style={margin.right5} size={20} color='#1abc9c'/>,
+		headerRight:<Icon name='search' style={margin.right10} size={20} color='#1abc9c'/>,
 	})
 
 	constructor(props){
@@ -47,10 +47,36 @@ class Home extends React.Component{
 		console.log(article, 'ffffffffffff')
 		this.props.navigation.navigate('web', { id: article._id});
 	}
-	_renderRow(row){
+	_renderRow(item){
 		return (
-			<TouchableHighlight activeOpacity={0.5} underlayColor={color.green}  onPress={this.navigate.bind(this, row)}>
-				<Text style={{color:'#333', height:100}}>{row.title}</Text>
+			<TouchableHighlight 
+				style={{backgroundColor:'#fff', paddingHorizontal:20}} 
+				activeOpacity={0.5} 
+				underlayColor={color.green}  
+				onPress={this.navigate.bind(this, item)}
+			>
+				<View style={{borderColor:'#eee', borderBottomWidth:1, borderStyle:'solid', paddingVertical:20}}>
+					<Text style={[color.black, font.size18, font.bold]}>{item.title}</Text>
+					{/* 标签 */}
+					<View style={[margin.top10, flex.start]}>
+						<View style={[margin.right30, flex.start]}>
+							<Text style={margin.right5}><Icon name="comment" style={{marginRight:20}} color="#bbb" size={14} /></Text>
+							<Text style={margin.right5}>{item.commentNum}</Text>
+							<Text>Comments</Text>
+						</View>
+						<View style={[margin.right30, flex.start]}>
+							<Text style={margin.right5}><Icon name="eye" style={{marginRight:20}} color="#bbb" size={14} /></Text>
+							<Text style={margin.right5}>{item.readNum}</Text>
+							<Text>Comments</Text>
+						</View>
+						<View style={[margin.right30, flex.start]}>
+							<Text style={margin.right5}><Icon name="tag" style={{marginRight:20}} color="#bbb" size={14} /></Text>
+							<Text>{item.tag ? item.tag.name : 'null'}</Text>
+						</View>
+					</View>
+					<Text style={[margin.top10, color.black1, font.size16]}>摘要：{item.previewText}</Text>
+				</View>
+
 			</TouchableHighlight>
 		)
 	}
@@ -67,6 +93,7 @@ class Home extends React.Component{
 					refreshControl={
 						<RefreshControl title="loading" refreshing={loading} onRefresh={this.onRefresh.bind(this)}/>
 					}
+					style={{marginTop:20}}
 					renderFooter={this._renderFooter.bind(this)}
 				/>
 					

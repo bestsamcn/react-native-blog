@@ -1,5 +1,11 @@
 import { StyleSheet } from 'react-native';
 
+
+//容器
+export const container = StyleSheet.create({
+
+});
+
 //颜色
 export const color = StyleSheet.create({
 	green:{
@@ -7,6 +13,12 @@ export const color = StyleSheet.create({
 	},
 	black:{
 		color:'#2b4356'
+	},
+	black1:{
+		color:'#3e5e77'
+	},
+	gray:{
+		color:'#bbb'
 	}
 });
 
@@ -20,6 +32,70 @@ export const margin = StyleSheet.create({
 	},
 	right5:{
 		marginRight:5
+	},
+	right10:{
+		marginRight:10
+	},
+	right20:{
+		marginRight:20
+	},
+	right30:{
+		marginRight:30
+	},
+	top5:{
+		marginTop:5
+	},
+	top10:{
+		marginTop:10
+	},
+	top15:{
+		marginTop:15
+	},
+	top20:{
+		marginTop:20
+	}
+});
+
+
+//字体
+export const font = StyleSheet.create({
+	size10:{
+		fontSize:10
+	},
+	size12:{
+		fontSize:12
+	},
+	size14:{
+		fontSize:14
+	},
+	size16:{
+		fontSize:16
+	},
+	size18:{
+		fontSize:18
+	},
+	size20:{
+		fontSize:20
+	},
+	size24:{
+		fontSize:24
+	},
+	size30:{
+		fontSize:30
+	},
+	bold:{
+		fontWeight:'bold'
+	}
+});
+
+//flex
+export const flex = StyleSheet.create({
+	start:{
+		flex:0,
+		justifyContent:'flex-start',
+		flexDirection:'row',
+		alignItems:'center'
 	}
 })
+
 

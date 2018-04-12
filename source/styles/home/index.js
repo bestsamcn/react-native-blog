@@ -4,6 +4,6 @@ export const headerStyles = StyleSheet.create({
 	logo:{
 		fontSize:16,
 		color:'#2b4356',
-		marginLeft:4,
+		marginLeft:10,
 	}
-})
+});

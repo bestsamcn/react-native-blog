@@ -22,13 +22,14 @@ class Webview extends Component{
 		let baseUrl = 'http://blog.bestsamcn.me/article/detail/';
 		console.log(baseUrl+id, 'fffffffffff')
 		return (
-			<WebView bounces={false}
-	            scalesPageToFit={true}
-	            onLoadStart={this.onLoadStart.bind(this)}
-	            onLoadEnd={this.onLoadEnd.bind(this)}
-	            source={{uri:baseUrl+id, method: 'GET'}}
-	            style={{width:width, height:height}}>
-	        </WebView>
+			 <WebView
+	          	style={{height:height, width:width}}
+		        source={{
+		            uri: 'http://www.baidu.com',
+		            method: 'GET'
+		        }}
+	         	scalesPageToFit={false}
+        	/>
         )
 	}
 	onLoadStart(){
@@ -49,7 +50,7 @@ class Webview extends Component{
 		return(
 			<View>
 				{this.renderWebview()}
-				{this.renderLoading()}
+				{this.state.isLoaindg && <Loading />}
 			</View>
 		)
 	}
