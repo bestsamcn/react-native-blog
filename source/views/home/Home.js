@@ -5,14 +5,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'dva/mobile';
 import { Loading } from '@/components/common';
 import { headerStyles } from '@/styles/home';
-import { margin, color, font, flex } from '@/styles/base';
+import { margin, color, font, flex, container } from '@/styles/base';
 import * as $$ from '@/utils';
 
 @connect(state=>({...state}))
 class Home extends React.Component{
-	static navigationOptions = ()=>({
-		headerLeft:<Text style={headerStyles.logo}><Icon name='bold' style={margin.right5} size={30} color='#1abc9c'/>est</Text>,
-		headerRight:<Icon name='search' style={margin.right10} size={20} color='#1abc9c'/>,
+	static navigationOptions = (navigation)=>({
+		headerLeft:<View style={[flex.startBaseline, headerStyles.logo]}><Icon name='bold' style={margin.right5} size={26} color='#1abc9c'/><Text style={font.size18}>est</Text></View>,
+		headerRight:<TouchableHighlight underlayColor={color.green} activeOpacity={0.5}><Icon name='search' style={margin.right10} size={24} color='#1abc9c'/></TouchableHighlight>,
 	})
 
 	constructor(props){
@@ -45,6 +45,7 @@ class Home extends React.Component{
 		this.props.dispatch({type:'home/getArticleList', params:{}})
 	}
 	navigate(article){
+		if(!article) return;
 		console.log(article, 'ffffffffffff')
 		this.props.navigation.navigate('web', { id: article._id});
 	}
@@ -98,7 +99,7 @@ class Home extends React.Component{
 		let { articleList, loading } = this.props.home;
 		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		return(
-			<View>
+			<View style={container.view}>
 				<ListView 
 					pageSize={10} 
 					enableEmptySections

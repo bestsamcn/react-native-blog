@@ -1,9 +1,18 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
-
+let { height, width } = Dimensions.get('window');
 //容器
 export const container = StyleSheet.create({
-
+	view:{
+		width:width,
+		height:height
+	},
+	height:{
+		height:height
+	},
+	width:{
+		width:width
+	}
 });
 
 //颜色
@@ -95,6 +104,12 @@ export const flex = StyleSheet.create({
 		justifyContent:'flex-start',
 		flexDirection:'row',
 		alignItems:'center'
+	},
+	startBaseline:{
+		flex:0,
+		justifyContent:'flex-start',
+		flexDirection:'row',
+		alignItems:'baseline'
 	}
 })
 
