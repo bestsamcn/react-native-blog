@@ -4,7 +4,7 @@ import { AsyncStorage } from 'react-native';
 
 import dva from 'dva/mobile';
 import Router from './router';
-import cache from './config/storage';
+import sync from './config/storage';
 import _models from './models';
 
 global.storage = new Storage({
@@ -12,7 +12,7 @@ global.storage = new Storage({
 	storageBackend: AsyncStorage,
 	defaultExpires: 1000 * 3600 * 24,
 	enableCache: true,
-	sync:cache,
+	sync:sync,
 });
 
 const app = dva({

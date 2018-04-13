@@ -52,9 +52,13 @@ class Home extends React.Component{
 		
 	}
 	async componentWillMount(){
-		let articleList = await global.storage.load({key:'articleList'});
-		console.log(articleList, 'asdfasdfas')
-		!articleList.length && this.props.dispatch({type:'home/getArticleList', params:{isRefresh:true}});
+		try{
+			let { articleList, total } = await global.storage.load({key:'article'});
+			!articleList.length && this.props.dispatch({type:'home/getArticleList', params:{isRefresh:true}});
+		}catch(e){
+			console.log(e)
+		}
+		
 	}
 	navigate(article){
 		if(!article) return;

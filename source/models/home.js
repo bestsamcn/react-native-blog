@@ -13,8 +13,12 @@ export default {
 	},
 	subscriptions:{
 		async setup({dispatch}){
-			let articleList = await glboal.storage.load('articleList');
-			// dispatch({type:'setState', payload:{pageIndex:1, total:11, articleList}});
+			try{
+				let { articleList, total } = await global.storage.load({key:'article'});
+				dispatch({type:'setState', payload:{pageIndex:1, total, articleList}});
+			}catch(e){
+				console.log(e)
+			}
 		}
 	},
 	effects:{
@@ -27,7 +31,7 @@ export default {
 				res = yield call(getArticleList, {pageIndex:1, pageSize});
 				pageIndex = 1;
 				articleList = res.data;
-				global.storage.save({key:'articleList', value:res.data});
+				global.storage.save({key:'article', data:{articleList, total:res.total}});
 
 			}else{
 				yield put({type:'setState', payload:{isMoring:true}});
@@ -44,6 +48,7 @@ export default {
 	},
 	reducers:{
 		setState(state, action){
+
 			return {
 				...state, 
 				...action.payload
