@@ -110,6 +110,12 @@ export const flex = StyleSheet.create({
 		justifyContent:'flex-start',
 		flexDirection:'row',
 		alignItems:'baseline'
+	},
+	center:{
+		flex:0,
+		justifyContent:'center',
+		flexDirection:'row',
+		alignItems:'center'
 	}
 })
 

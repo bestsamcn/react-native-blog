@@ -23,6 +23,8 @@ class Home extends React.Component{
 		}
 	}
 	onRefresh(){
+		let { isMoring, isRefreshing } = this.props.home;
+		if(isMoring || isRefreshing) return;
 		this.props.dispatch({type:'home/getArticleList', params:{isRefresh:true}});
 	}
 	onScroll(scrollView){
@@ -36,20 +38,23 @@ class Home extends React.Component{
 		}
 	}
 	onEndReached(){
+		let { isMoring, isRefreshing } = this.props.home;
+		if(isMoring || isRefreshing) return;
 		this.props.dispatch({type:'home/getArticleList', params:{}})
 	}
 	renderFooter(){
-		let { isMoring } = this.props.home;
+		let { isMoring, pageIndex, pageSize, total } = this.props.home;
 		if(isMoring){
-			return <Loading />
+			return <View style={[{width:'100%', height:40}, flex.center]}><Loading /></View>
+		}else if(pageIndex * pageSize >= total){
+			return <View style={[{width:'100%', height:40}, flex.center]}><Text style={{textAlign:'center', color:'#333'}}>没有更多了</Text></View>
 		}
-		return null
+		
 	}
-	componentDidMount(){
-		console.log(this)
-	}
-	componentWillMount(){
-		this.props.dispatch({type:'home/getArticleList', params:{isRefresh:false}});
+	async componentWillMount(){
+		let articleList = await global.storage.load({key:'articleList'});
+		console.log(articleList, 'asdfasdfas')
+		!articleList.length && this.props.dispatch({type:'home/getArticleList', params:{isRefresh:true}});
 	}
 	navigate(article){
 		if(!article) return;
