@@ -38,7 +38,7 @@ const TabNavigation = TabNavigator(
 	},
 	{
 		animationEnabled: false,
-		swipeEnabled:true,
+		swipeEnabled:false,
 		tabBarPosition:'bottom',
 		backBehavior:false,
         mode: 'modal',

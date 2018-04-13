@@ -18,38 +18,44 @@ class Home extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			loading:false
+			loading:false,
+			loadMore:false
 		}
 	}
 	onRefresh(){
-		this.props.dispatch({type:'home/getArticleList', params:{}})
+		this.props.dispatch({type:'home/getArticleList', params:{isRefresh:true}});
 	}
 	onScroll(scrollView){
 		let contentHeight = scrollView.nativeEvent.contentSize.height;
 		let offsetY = scrollView.nativeEvent.contentOffset.y;
 		let viewHeight = scrollView.nativeEvent.layoutMeasurement.height;
 		if(offsetY + viewHeight > contentHeight-10){
-			this.setState({loading:true});
+			this.setState({loadMore:true});
 		}else{
-			this.setState({loading:false});
+			this.setState({loadMore:false});
 		}
 	}
-	_renderFooter(){
-		let { loading } = this.state;
-		return <Loading animating={loading}/>
+	onEndReached(){
+		this.props.dispatch({type:'home/getArticleList', params:{}})
+	}
+	renderFooter(){
+		let { isMoring } = this.props.home;
+		if(isMoring){
+			return <Loading />
+		}
+		return null
 	}
 	componentDidMount(){
 		console.log(this)
 	}
 	componentWillMount(){
-		this.props.dispatch({type:'home/getArticleList', params:{}})
+		this.props.dispatch({type:'home/getArticleList', params:{isRefresh:false}});
 	}
 	navigate(article){
 		if(!article) return;
-		console.log(article, 'ffffffffffff')
 		this.props.navigation.navigate('web', { id: article._id});
 	}
-	_renderRow(item){
+	renderRow(item){
 		return (
 			<TouchableHighlight 
 				style={{backgroundColor:'#fff', paddingHorizontal:20}} 
@@ -96,20 +102,22 @@ class Home extends React.Component{
 		)
 	}
 	render(){
-		let { articleList, loading } = this.props.home;
+		let { articleList, isRefreshing } = this.props.home;
 		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		return(
-			<View style={container.view}>
+			<View>
 				<ListView 
 					pageSize={10} 
 					enableEmptySections
 					onScroll={this.onScroll.bind(this)} 
-					dataSource={ds.cloneWithRows(articleList)} renderRow={this._renderRow.bind(this)} 
+					dataSource={ds.cloneWithRows(articleList)} renderRow={this.renderRow.bind(this)} 
 					refreshControl={
-						<RefreshControl title="loading" refreshing={loading} onRefresh={this.onRefresh.bind(this)}/>
+						<RefreshControl title="loading" refreshing={isRefreshing} onRefresh={this.onRefresh.bind(this)}/>
 					}
+					onEndReachedThreshold={20}
+					onEndReached={this.onEndReached.bind(this)}
 					style={{marginTop:20}}
-					renderFooter={this._renderFooter.bind(this)}
+					renderFooter={this.renderFooter.bind(this)}
 				/>
 					
 				
