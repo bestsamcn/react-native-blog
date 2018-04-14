@@ -76,9 +76,6 @@ const MainNavigation = StackNavigator(
 		web:{
 			screen:WebScreen,
 			path:'webview/:id', 
-			navigationOptions:()=>({
-				headerTitle:'文章详情'
-			})
 		}
 	},
 	{

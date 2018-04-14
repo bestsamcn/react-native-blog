@@ -11,7 +11,7 @@ import * as $$ from '@/utils';
 @connect(state=>({...state}))
 class Home extends React.Component{
 	static navigationOptions = (navigation)=>({
-		headerLeft:<View style={[flex.startBaseline, headerStyles.logo]}><Icon name='bold' style={margin.right5} size={26} color='#1abc9c'/><Text style={font.size18}>est</Text></View>,
+		headerLeft:<View style={[flex.startBaseline, headerStyles.logo]}><Icon name='bold' style={margin.right5} size={26} color='#1abc9c'/><Text style={[font.bold, font.size18]}>est</Text></View>,
 		headerRight:<TouchableHighlight underlayColor={color.green} activeOpacity={0.5}><Icon name='search' style={margin.right10} size={24} color='#1abc9c'/></TouchableHighlight>,
 	})
 

@@ -5,7 +5,7 @@ let { height, width } = Dimensions.get('window');
 export const container = StyleSheet.create({
 	view:{
 		width:width,
-		height:height
+		height:height-49
 	},
 	height:{
 		height:height
