@@ -13,7 +13,13 @@ export const HomeHeader = ({navigation})=>({
 	headerRight:<TouchableHighlight underlayColor={color.green} activeOpacity={0.5}>
 					<Icon name='search' style={margin.right10} size={24} color='#2b4356'/>
 				</TouchableHighlight>,
-	headerStyle:{borderBottomWidth:1, borderStyle:'solid', borderBottomColor:'#f6f6f6'}
+	headerStyle:{
+		borderBottomWidth:1, 
+		shadowOffset:{width:0, height:0},
+	    shadowOpacity:0, 
+	    borderStyle:'solid',
+	    borderBottomColor:'#f6f6f6'
+	}
 });
 
 //浏览器头部
@@ -27,6 +33,13 @@ export const WebHeader = ({navigation})=>{
 					>
 						<Icon name="arrow-left" color="#1abc9c" size={20}/>
 					</TouchableHighlight>,
-		headerTitle:<Text style={[color.black, font.size20]}>文章详情</Text>
+		headerTitle:<Text style={[color.black, font.size20]}>文章详情</Text>,
+		headerStyle:{
+			borderBottomWidth:1, 
+			shadowOffset:{width:0, height:0},
+		    shadowOpacity:0, 
+		    borderStyle:'solid',
+		    borderBottomColor:'#f6f6f6'
+		}
 	}
 }

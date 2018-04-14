@@ -73,17 +73,17 @@ class Home extends React.Component{
 					<Text style={[color.black, font.size18, font.bold]}>{item.title}</Text>
 					{/* 标签 */}
 					<View style={[margin.top10, flex.start]}>
-						<View style={[margin.right30, flex.start]}>
+						<View style={[margin.right10, flex.start]}>
 							<Text style={margin.right5}><Icon name="comment" style={{marginRight:20}} color="#bbb" size={14} /></Text>
 							<Text style={margin.right5}>{item.commentNum}</Text>
 							<Text>Comments</Text>
 						</View>
-						<View style={[margin.right30, flex.start]}>
+						<View style={[margin.right10, flex.start]}>
 							<Text style={margin.right5}><Icon name="eye" style={{marginRight:20}} color="#bbb" size={14} /></Text>
 							<Text style={margin.right5}>{item.readNum}</Text>
 							<Text>Comments</Text>
 						</View>
-						<View style={[margin.right30, flex.start]}>
+						<View style={[margin.right10, flex.start]}>
 							<Text style={margin.right5}><Icon name="tag" style={{marginRight:20}} color="#bbb" size={14} /></Text>
 							<Text>{item.tag ? item.tag.name : 'null'}</Text>
 						</View>

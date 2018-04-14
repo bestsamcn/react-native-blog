@@ -55,7 +55,10 @@ const TabNavigation = TabNavigator(
 	            height:50,
 	            borderStyle:'solid',
 	            borderTopColor:'#f1f1f1',
-	            borderTopWidth:1
+	            borderTopWidth:1,
+	            shadowOffset:{width:0, height:0},
+	            shadowOpacity:0,
+
 	        },
 	        labelStyle: {
 	            fontSize: 12, // 文字大小,

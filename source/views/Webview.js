@@ -22,8 +22,7 @@ class Webview extends Component{
 	}
 	renderWebview(){
 		let { id } = this.props.navigation.state.params;
-		let baseUrl = 'http://angular.bestsamcn.me/';
-		console.log(baseUrl+id)
+		let baseUrl = 'http://blog.bestsamcn.me/article/detail/';
 		let web = <WebView
 	          	onLoadStart={this.onLoadStart.bind(this)}
 	          	onLoadEnd={this.onLoadEnd.bind(this)}
