@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const headerStyles = StyleSheet.create({
+export const header = StyleSheet.create({
 	logo:{
 		marginLeft:10,
 	}

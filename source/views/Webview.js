@@ -3,22 +3,11 @@ import { WebView, View, Dimensions, Text, TouchableHighlight } from 'react-nativ
 import { Loading  } from '@/components/common';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { color, font, flex, container } from '@/styles/base';
+import { WebHeader } from '@/components/layout/headers';
 
 let { width, height } = Dimensions.get('window');
 class Webview extends Component{
-	static navigationOptions = ({navigation})=>{
-		return {
-			headerLeft:<TouchableHighlight 
-							activeOpacity={0.5}
-							underlayColor="#f1f1f1"
-							onPress={()=>navigation.goBack()} 
-							style={{marginLeft:10, padding:10}}
-						>
-							<Icon name="arrow-left" color="#1abc9c" size={20}/>
-						</TouchableHighlight>,
-			headerTitle:<Text style={[color.black, font.size20]}>文章详情</Text>
-		}
-	}
+	static navigationOptions = WebHeader;
 	constructor(props){
 		super(props);
 		this.state={
@@ -38,7 +27,7 @@ class Webview extends Component{
 		let web = <WebView
 	          	onLoadStart={this.onLoadStart.bind(this)}
 	          	onLoadEnd={this.onLoadEnd.bind(this)}
-	          	style={{width:'100%', height:'100%', backgroundColor:'#333'}}
+	          	style={{width:'100%', height:'100%'}}
 		        source={{
 		            uri: baseUrl+id,
 		            method: 'GET'

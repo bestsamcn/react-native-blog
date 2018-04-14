@@ -5,16 +5,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'dva/mobile';
 import { Loading } from '@/components/common';
 import { headerStyles } from '@/styles/home';
+import { HomeHeader } from '@/components/layout/headers';
 import { margin, color, font, flex, container } from '@/styles/base';
 import * as $$ from '@/utils';
 
 @connect(state=>({...state}))
 class Home extends React.Component{
-	static navigationOptions = (navigation)=>({
-		headerLeft:<View style={[flex.startBaseline, headerStyles.logo]}><Icon name='bold' style={margin.right5} size={26} color='#1abc9c'/><Text style={[font.bold, font.size18]}>est</Text></View>,
-		headerRight:<TouchableHighlight underlayColor={color.green} activeOpacity={0.5}><Icon name='search' style={margin.right10} size={24} color='#1abc9c'/></TouchableHighlight>,
-	})
-
+	static navigationOptions = HomeHeader;
 	constructor(props){
 		super(props);
 		this.state = {
@@ -125,7 +122,6 @@ class Home extends React.Component{
 					}
 					onEndReachedThreshold={20}
 					onEndReached={this.onEndReached.bind(this)}
-					style={{marginTop:20}}
 					renderFooter={this.renderFooter.bind(this)}
 				/>
 					
