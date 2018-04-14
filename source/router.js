@@ -1,7 +1,7 @@
 import React from 'react';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { About, Message } from '@/views';
+import { About, Message, Splash } from '@/views';
 import HomeStack from '@/views/home';
 import WebScreen from '@/views/Webview';
 
@@ -79,10 +79,13 @@ const MainNavigation = StackNavigator(
 		web:{
 			screen:WebScreen,
 			path:'webview/:id', 
+		},
+		Splash:{
+			screen:Splash
 		}
 	},
 	{
-		initialRouteName:'Tab',
+		initialRouteName:'Splash',
 	}
 )
 

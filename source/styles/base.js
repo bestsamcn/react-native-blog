@@ -92,6 +92,12 @@ export const font = StyleSheet.create({
 	size30:{
 		fontSize:30
 	},
+	size40:{
+		fontSize:40
+	},
+	size50:{
+		fontSize:50
+	},
 	bold:{
 		fontWeight:'bold'
 	}

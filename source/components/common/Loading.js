@@ -10,8 +10,8 @@ class Loading extends Component{
 	}
 	static defaultProps = {
 		animating:true,
-		color:'#ccc',
-		size:'large'
+		color:'#1abc9c',
+		size:'small'
 	}
 	constructor(props){
 		super();

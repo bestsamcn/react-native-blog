@@ -42,9 +42,14 @@ class Home extends React.Component{
 	renderFooter(){
 		let { isMoring, pageIndex, pageSize, total } = this.props.home;
 		if(isMoring){
-			return <View style={[{width:'100%', height:40}, flex.center]}><Loading /></View>
+			return <View style={[{width:'100%', height:40}, flex.center]}>
+				<Loading />
+				<Text style={{textAlign:'center', color:'#1abc9c', marginLeft:'5'}}>正在加载...</Text>
+			</View>
 		}else if(pageIndex * pageSize >= total){
-			return <View style={[{width:'100%', height:40}, flex.center]}><Text style={{textAlign:'center', color:'#333'}}>没有更多了</Text></View>
+			return <View style={[{width:'100%', height:40}, flex.center]}>
+				<Text style={{textAlign:'center', color:'#333'}}>没有更多了</Text>
+			</View>
 		}
 		
 	}
@@ -118,7 +123,7 @@ class Home extends React.Component{
 					onScroll={this.onScroll.bind(this)} 
 					dataSource={ds.cloneWithRows(articleList)} renderRow={this.renderRow.bind(this)} 
 					refreshControl={
-						<RefreshControl title="loading" refreshing={isRefreshing} onRefresh={this.onRefresh.bind(this)}/>
+						<RefreshControl title="loading" colors={['#1abc9c']} refreshing={isRefreshing} onRefresh={this.onRefresh.bind(this)}/>
 					}
 					onEndReachedThreshold={20}
 					onEndReached={this.onEndReached.bind(this)}
