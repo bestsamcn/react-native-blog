@@ -29,7 +29,7 @@ export const WebHeader = ({navigation})=>{
 						activeOpacity={0.5}
 						underlayColor="#f1f1f1"
 						onPress={()=>navigation.goBack()} 
-						style={{padding:15, flex:1, alignItems:'center'}}
+						style={{padding:15, height:'100%', flex:1, alignItems:'center'}}
 					>
 						<Icon name="arrow-left" color="#1abc9c" size={20}/>
 					</TouchableHighlight>,

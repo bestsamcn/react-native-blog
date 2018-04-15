@@ -22,8 +22,9 @@ class Webview extends Component{
 	}
 	renderWebview(){
 		let { id } = this.props.navigation.state.params;
-		let baseUrl = 'http://blog.bestsamcn.me/article/detail/';
-		let web = <WebView
+		let baseUrl = 'file:///android_asset/web/index.html#/app/article/';
+		return (
+			<WebView
 	          	onLoadStart={this.onLoadStart.bind(this)}
 	          	onLoadEnd={this.onLoadEnd.bind(this)}
 	          	style={{width:'100%', height:'100%'}}
@@ -31,15 +32,16 @@ class Webview extends Component{
 		            uri: baseUrl+id,
 		            method: 'GET'
 		        }}
-		        renderError={() => {
-                    console.log('renderError')
-                    return <View><Text>renderError回调了，出现错误</Text></View>
-                }}
+		        renderError={(e) => {
+	                console.log(e, 'renderError')
+	                return <View><Text>renderError回调了，出现错误</Text></View>
+	            }}
+	            domStorageEnabled={true}
 		        javaScriptEnabled={true}
 		        mixedContentMode="always"
 	         	scalesPageToFit={true}
-        	/>
-        return web;
+	    	/>
+		);
 	}
 	onLoadStart(){
 		this.setState({isLoading:true});
