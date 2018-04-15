@@ -16,12 +16,13 @@ class Splash extends React.Component {
 	}
 	componentDidMount() {
 		const { navigation } = this.props;
+		let that = this;
 		this.timer1 = setInterval(()=>{
 			let { opacity } = this.state;
 			opacity = opacity + 0.1;
-			this.setState({opacity});
+			that.setState({opacity});
 			if(opacity == 1){
-				this.timer1 && clearInterval(this.timer1);
+				that.timer1 && clearInterval(that.timer1);
 			}
 		}, 30);
 		this.timer = setTimeout(() => {

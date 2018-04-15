@@ -44,7 +44,7 @@ class Home extends React.Component{
 		if(isMoring){
 			return <View style={[{width:'100%', height:40}, flex.center]}>
 				<Loading />
-				<Text style={{textAlign:'center', color:'#1abc9c', marginLeft:'5'}}>正在加载...</Text>
+				<Text style={{textAlign:'center', color:'#1abc9c', marginLeft:5}}>正在加载...</Text>
 			</View>
 		}else if(pageIndex * pageSize >= total){
 			return <View style={[{width:'100%', height:40}, flex.center]}>
@@ -64,7 +64,7 @@ class Home extends React.Component{
 	}
 	navigate(article){
 		if(!article) return;
-		this.props.navigation.navigate('web', { id: article._id});
+		this.props.navigation.navigate('Web', { id: article._id});
 	}
 	renderRow(item){
 		return (

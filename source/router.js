@@ -76,7 +76,7 @@ const MainNavigation = StackNavigator(
 				header:null
 			})
 		},
-		web:{
+		Web:{
 			screen:WebScreen,
 			path:'webview/:id', 
 		},
