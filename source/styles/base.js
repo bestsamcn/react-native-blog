@@ -1,6 +1,9 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 let { height, width } = Dimensions.get('window');
+
+
+
 //容器
 export const container = StyleSheet.create({
 	view:{
@@ -123,6 +126,6 @@ export const flex = StyleSheet.create({
 		flexDirection:'row',
 		alignItems:'center'
 	}
-})
+});
 
 

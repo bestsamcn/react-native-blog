@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { WebView, View, Dimensions, Text, TouchableHighlight } from 'react-native';
+import { WebView, View, Dimensions, Text, TouchableHighlight, KeyboardAvoidingView } from 'react-native';
 import { Loading  } from '@/components/common';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { color, font, flex, container } from '@/styles/base';
@@ -60,10 +60,10 @@ class Webview extends Component{
 	render(){
 		
 		return(
-			<View style={container.view}>
+			<KeyboardAvoidingView style={container.view} behavior="padding">
 				{this.renderWebview()}
 				{this.state.isLoading && this.renderLoading()}
-			</View>
+			</KeyboardAvoidingView>
 		)
 	}
 }
