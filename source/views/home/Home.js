@@ -53,9 +53,10 @@ class Home extends React.Component{
 		}
 		
 	}
-	async componentWillMount(){
+	async componentDidMount(){
 		try{
 			let { articleList, total } = await global.storage.load({key:'article'});
+			console.log(articleList.length)
 			!articleList.length && this.props.dispatch({type:'home/getArticleList', params:{isRefresh:true}});
 		}catch(e){
 			console.log(e)
@@ -79,32 +80,32 @@ class Home extends React.Component{
 					{/* 标签 */}
 					<View style={[margin.top10, flex.start]}>
 						<View style={[margin.right10, flex.start]}>
-							<Text style={margin.right5}><Icon name="comment" style={{marginRight:20}} color="#bbb" size={14} /></Text>
-							<Text style={margin.right5}>{item.commentNum}</Text>
-							<Text>Comments</Text>
+							<Text style={[[margin.right5, font.size11], font.size11]}><Icon name="comment" style={{marginRight:20}} color="#bbb" size={13} /></Text>
+							<Text style={[margin.right5, font.size11]}>{item.commentNum}</Text>
+							<Text style={font.size11}>Comments</Text>
 						</View>
 						<View style={[margin.right10, flex.start]}>
-							<Text style={margin.right5}><Icon name="eye" style={{marginRight:20}} color="#bbb" size={14} /></Text>
-							<Text style={margin.right5}>{item.readNum}</Text>
-							<Text>Views</Text>
+							<Text style={[margin.right5, font.size11]}><Icon name="eye" style={{marginRight:20}} color="#bbb" size={13} /></Text>
+							<Text style={[margin.right5, font.size11]}>{item.readNum}</Text>
+							<Text style={font.size11}>Views</Text>
 						</View>
 						<View style={[margin.right10, flex.start]}>
-							<Text style={margin.right5}><Icon name="tag" style={{marginRight:20}} color="#bbb" size={14} /></Text>
-							<Text>{item.tag ? item.tag.name : 'null'}</Text>
+							<Text style={[margin.right5, font.size11]}><Icon name="tag" style={{marginRight:20}} color="#bbb" size={13} /></Text>
+							<Text style={font.size11}>{item.tag ? item.tag.name : 'null'}</Text>
 						</View>
 					</View>
-					<Text style={[margin.top10, color.black1, font.size16]}>摘要：{item.previewText}</Text>
+					<Text style={[margin.top10, color.black1, font.size14]}>摘要：{item.previewText}</Text>
 					<View style={[margin.top10, flex.start]}>
 						<View style={margin.right10}>
 							<Text style={{borderRadius:2, paddingVertical:2, paddingHorizontal:4, borderStyle:'solid', borderColor:'#1abc9c', borderWidth:1, color:'#1abc9c', fontSize:12}}>{item.category ? item.category.name :'我可能被删了'}</Text>
 						</View>
 						<View style={[margin.right10, flex.start]}>
-							<Text style={margin.right5}><Icon name="calendar" style={{marginRight:20}} color="#bbb" size={14} /></Text>
-							<Text>{$$.dateFormat(item.createTime, 'yyyy-mm-dd')}</Text>
+							<Text style={[margin.right5, font.size11]}><Icon name="calendar" style={{marginRight:20}} color="#bbb" size={13} /></Text>
+							<Text style={font.size11}>{$$.dateFormat(item.createTime, 'yyyy-mm-dd')}</Text>
 						</View>
 						<View style={[margin.right10, flex.start]}>
-							<Text style={margin.right5}><Icon name="edit" style={{marginRight:20}} color="#bbb" size={14} /></Text>
-							<Text>{$$.dateFormat(item.lastEditTime, 'yyyy-mm-dd')}</Text>
+							<Text style={[margin.right5, font.size11]}><Icon name="edit" style={{marginRight:20}} color="#bbb" size={13} /></Text>
+							<Text style={font.size11}>{$$.dateFormat(item.lastEditTime, 'yyyy-mm-dd')}</Text>
 						</View>
 					</View>
 				</View>

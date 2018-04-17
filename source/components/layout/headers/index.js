@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableHighlight, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TouchableHighlight, TextInput, StyleSheet, Keyboard } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { color, font, flex, container, margin } from '@/styles/base'
+import { color, font, flex, container, margin } from '@/styles/base';
 
 
 //首页头部
@@ -48,6 +48,11 @@ export const WebHeader = ({navigation})=>{
 
 //搜索头部
 export const SearchHeader = ({navigation})=>{
+
+	let onCancel = ()=>{
+		navigation.goBack();
+		Keyboard.dismiss();
+	}
 	let header = (
 		<View style={{
 			paddingRight:80,
@@ -87,7 +92,7 @@ export const SearchHeader = ({navigation})=>{
 			</View>
 			
 			<TouchableHighlight style={{
-				width:70,
+				width:80,
 				height:48,
 				position:'absolute',
 				top:0,
@@ -97,9 +102,9 @@ export const SearchHeader = ({navigation})=>{
 			}}
 			activeOpacity={0.5}
 			underlayColor="#fff"
-			onPress={navigation.goBack.bind(null)}
+			onPress={onCancel}
 			>
-				<Text style={{fontSize:18, paddingVertical:10, paddingHorizontal:20, color:'#1abc9c', textAlign:'center'}}>取消</Text>
+				<Text style={{fontSize:16, paddingVertical:10, paddingHorizontal:20, color:'#1abc9c', textAlign:'center'}}>取消</Text>
 			</TouchableHighlight>
 		</View>
 	)

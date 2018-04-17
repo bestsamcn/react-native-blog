@@ -34,6 +34,19 @@ export const color = StyleSheet.create({
 	}
 });
 
+//背景
+export const bg = StyleSheet.create({
+	white:{
+		backgroundColor:'#fff'
+	},
+	gray:{
+		backgroundColor:'#bbb'
+	},
+	gray_:{
+		backgroundColor:'#eee'
+	}
+})
+
 //外边距
 export const margin = StyleSheet.create({
 	left5:{
@@ -68,14 +81,83 @@ export const margin = StyleSheet.create({
 	}
 });
 
+//内边距
+export const padding = StyleSheet.create({
+	a5:{
+		padding:5
+	},
+	a10:{
+		padding:10
+	},
+	h5:{
+		paddingHorizontal:5
+	},
+	h10:{
+		paddingHorizontal:10
+	},
+	h20:{
+		paddingHorizontal:20
+	},
+	h30:{
+		paddingHorizontal:30
+	},
+	v5:{
+		paddingVertical:5
+	},
+	v10:{
+		paddingVertical:10
+	},
+	v20:{
+		paddingVertical:20
+	},
+	v30:{
+		paddingVertical:30
+	},
+	left5:{
+		paddingLeft:5
+	},
+	left10:{
+		paddingLeft:10
+	},
+	right5:{
+		paddingRight:5
+	},
+	right10:{
+		paddingRight:10
+	},
+	right20:{
+		paddingRight:20
+	},
+	right30:{
+		paddingRight:30
+	},
+	top5:{
+		paddingTop:5
+	},
+	top10:{
+		paddingTop:10
+	},
+	top15:{
+		paddingTop:15
+	},
+	top20:{
+		paddingTop:20
+	}
+});
 
 //字体
 export const font = StyleSheet.create({
 	size10:{
 		fontSize:10
 	},
+	size11:{
+		fontSize:11
+	},
 	size12:{
 		fontSize:12
+	},
+	size13:{
+		fontSize:13
 	},
 	size14:{
 		fontSize:14

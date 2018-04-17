@@ -3,7 +3,7 @@ import { StackNavigator, TabNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { About, Message, Splash } from '@/views';
 import HomeStack from '@/views/home';
-import SearchStack from '@/views/search';
+import SearchStack from './views/search';
 import WebScreen from '@/views/Webview';
 
 const TabNavigation = TabNavigator(
@@ -89,7 +89,7 @@ const MainNavigation = StackNavigator(
 		}
 	},
 	{
-		initialRouteName:'Splash',
+		initialRouteName:'Tab',
 	}
 )
 
