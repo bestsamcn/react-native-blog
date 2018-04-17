@@ -8,7 +8,15 @@ let { height, width } = Dimensions.get('window');
 export const container = StyleSheet.create({
 	view:{
 		width:width,
+		height:height
+	},
+	view_:{
+		width:width,
 		height:height-49
+	},
+	view__:{
+		width:width,
+		height:height-98
 	},
 	height:{
 		height:height
@@ -203,7 +211,7 @@ export const flex = StyleSheet.create({
 		alignItems:'baseline'
 	},
 	center:{
-		flex:0,
+		flex:1,
 		justifyContent:'center',
 		flexDirection:'row',
 		alignItems:'center'

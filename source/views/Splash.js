@@ -19,7 +19,7 @@ class Splash extends React.Component {
 		this.setOpacity();
 		this.timer = setTimeout(() => {
 			InteractionManager.runAfterInteractions(() => {
-				navigation.navigate('Tab');
+				navigation.navigate('HomeTab');
 			});
 		}, 2500);
 	}

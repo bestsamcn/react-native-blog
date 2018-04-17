@@ -1,11 +1,13 @@
 import React from 'react';
+import { View } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { About, Message, Splash } from '@/views';
 import HomeStack from '@/views/home';
-import SearchStack from './views/search';
+import { SearchResult, SearchIndex } from './views/search';
 import WebScreen from '@/views/Webview';
-
+import SplashScreen from 'react-native-splash-screen';
+import { delay } from '@/utils';
 const TabNavigation = TabNavigator(
 	{
 		HomeTab:{
@@ -85,22 +87,32 @@ const MainNavigation = StackNavigator(
 			screen:Splash
 		},
 		Search:{
-			screen:SearchStack
+			screen:SearchIndex
+		},
+		Result:{
+			screen:SearchResult
 		}
 	},
 	{
-		initialRouteName:'Tab',
+		initialRouteName:'Splash',
 	}
 )
 
-export default class Router extends React.Component{
+class Router extends React.Component{
 	constructor(props){
 		super(props);
 	}
+	async componentDidMount() {
+        // do anything while splash screen keeps, use await to wait for an async task.
+        await delay(2000);
+    }
 	render(){
-		return <MainNavigation />
+		return(
+			<MainNavigation />
+		) 
 	}
 }
+export default Router;
 
 
 export const routerReducer = (state, action={})=>{

@@ -115,9 +115,12 @@ class Home extends React.Component{
 	}
 	render(){
 		let { articleList, isRefreshing } = this.props.home;
+		let { isLoading } = this.props.global;
 		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
 		return(
-			<View>
+			<View style={[container.view__]}>
+				{isLoading && <View style={[flex.center, container.view__]}><Loading /></View>}	
 				<ListView 
 					pageSize={10} 
 					enableEmptySections
@@ -130,8 +133,6 @@ class Home extends React.Component{
 					onEndReached={this.onEndReached.bind(this)}
 					renderFooter={this.renderFooter.bind(this)}
 				/>
-					
-				
 			</View>		
 		)
 	}

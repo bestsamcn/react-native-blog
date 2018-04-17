@@ -15,15 +15,15 @@ global.storage = new Storage({
 	sync:sync,
 });
 
-const app = dva({
+global.app = dva({
 	onError(e) {
 		console.log('onError', e)
 	}
 });
 
-_models(app);
-app.router(() => < Router / > )
+_models(global.app);
+global.app.router(() => < Router / > )
 
 export default () => {
-	return app.start();
+	return global.app.start();
 }

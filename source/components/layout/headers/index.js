@@ -49,9 +49,15 @@ export const WebHeader = ({navigation})=>{
 //搜索头部
 export const SearchHeader = ({navigation})=>{
 
+	//取消返回上一级
 	let onCancel = ()=>{
 		navigation.goBack();
 		Keyboard.dismiss();
+	}
+
+	//确定
+	let onOk = ()=>{
+		navigation.navigate('Result')
 	}
 	let header = (
 		<View style={{
@@ -84,7 +90,7 @@ export const SearchHeader = ({navigation})=>{
 				}}
 				selectionColor="#bbb"
 				autoFocus={true}
-				onSubmitEditing={()=>alert('searching')}
+				onSubmitEditing={onOk}
 				placeholderTextColor="#ccc"
 				placeholder="请输入关键字"
 				underlineColorAndroid='transparent'
