@@ -56,7 +56,6 @@ class Home extends React.Component{
 	async componentDidMount(){
 		try{
 			let { articleList, total } = await global.storage.load({key:'article'});
-			console.log(articleList, 'componentDidMount')
 			!articleList || articleList.length && this.props.dispatch({type:'home/getArticleList', params:{isRefresh:true}});
 		}catch(e){
 			console.log(e)

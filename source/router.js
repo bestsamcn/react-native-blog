@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ToastAndroid, BackHandler } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { About, Message, Splash } from '@/views';
@@ -8,6 +8,7 @@ import { SearchResult, SearchIndex } from './views/search';
 import WebScreen from '@/views/Webview';
 import SplashScreen from 'react-native-splash-screen';
 import { delay } from '@/utils';
+import { connect } from 'dva/mobile';
 const TabNavigation = TabNavigator(
 	{
 		HomeTab:{
@@ -97,7 +98,7 @@ const MainNavigation = StackNavigator(
 		initialRouteName:'Tab',
 	}
 )
-
+@connect(state=>({...state}))
 class Router extends React.Component{
 	constructor(props){
 		super(props);
@@ -107,10 +108,24 @@ class Router extends React.Component{
         await delay(500);
         await SplashScreen.hide();
     }
+    componentWillMount(){
+    	BackHandler.addEventListener('hardwareBackPress', this.onBackHandler.bind(this));
+    }
+    componentWillUnmount(){
+    	BackHandler.removeEventListener('hardwareBackPress', this.onBackHandler.bind(this));
+    }
+    onBackHandler(){
+    	if( this.lastBackPressTime && (Date.now() - this.lastBackPressTime < 2000)){
+    		return BackHandler.exitApp();
+    	}
+    	this.lastBackPressTime = Date.now() ;
+    	ToastAndroid.show('再点击一次退出', 2000);
+    	return true;
+    }
 	render(){
 		return(
 			<MainNavigation />
-		) 
+		)
 	}
 }
 export default Router;

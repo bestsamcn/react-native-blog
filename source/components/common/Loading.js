@@ -14,10 +14,9 @@ class Loading extends Component{
 		size:'small'
 	}
 	constructor(props){
-		super();
+		super(props);
 	}
 	render(){
-		console.log(this.props)
 		return(
 			<ActivityIndicator {...this.props}/>
 		)
