@@ -104,7 +104,8 @@ class Router extends React.Component{
 	}
 	async componentDidMount() {
         // do anything while splash screen keeps, use await to wait for an async task.
-        await delay(2000);
+        await delay(500);
+        await SplashScreen.hide();
     }
 	render(){
 		return(
