@@ -11,11 +11,11 @@ class Search extends Component{
 	constructor(props){
 		super(props);
 	}
-	async componentWillMount(){
+	async componentDidMount(){
 		let { hotwordList } = this.props.search;
 		let { hotword } = await global.storage.load({key:'hotword'});
-		if(hotword.length < 1){
-			this.props.disaptch({type:'search/getHotwordList', params:{}});
+		if(!hotword || !hotword.length){
+			this.props.dispatch({type:'search/getHotwordList', params:{}});
 		}
 	}
 	onStartShouldSetResponder(){
@@ -23,14 +23,13 @@ class Search extends Component{
 	}
 	render(){
 		let { hotwordList } = this.props.search;
-		console.log(hotwordList, 'ffffffffff')
 		return(
 			<View style={[container.view, bg.white]} onStartShouldSetResponder={this.onStartShouldSetResponder.bind(this)}>
 				<View style={[margin.top20, padding.h10]}>
 					<Text style={[color.black, font.size14]}><Icon name="fire" color="#2b4356"/>热门搜索：</Text>
 				</View>
 				<View style={[flex.start, padding.a10, {flexWrap:'wrap'}]}>
-					{hotwordList.map(item=>(
+					{!!hotwordList && !!hotwordList.length && hotwordList.map(item=>(
 						<TouchableHighlight key={item._id} style={[margin.right10, margin.top10]}><Text style={[font.size11, padding.v5, padding.h10, {borderColor:'#ddd', borderWidth:1, borderRadius:3}]}>{item.name}</Text></TouchableHighlight>
 					))}
 				</View>

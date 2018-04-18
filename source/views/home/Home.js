@@ -41,12 +41,12 @@ class Home extends React.Component{
 	}
 	renderFooter(){
 		let { isMoring, pageIndex, pageSize, total } = this.props.home;
-		if(isMoring){
+		if(pageIndex * pageSize < total){
 			return <View style={[{width:'100%', height:40}, flex.center]}>
 				<Loading />
 				<Text style={{textAlign:'center', color:'#1abc9c', marginLeft:5}}>正在加载...</Text>
 			</View>
-		}else if(pageIndex * pageSize >= total){
+		}else{
 			return <View style={[{width:'100%', height:40}, flex.center]}>
 				<Text style={{textAlign:'center', color:'#333'}}>没有更多了</Text>
 			</View>
@@ -56,8 +56,8 @@ class Home extends React.Component{
 	async componentDidMount(){
 		try{
 			let { articleList, total } = await global.storage.load({key:'article'});
-			console.log(articleList.length)
-			!articleList.length && this.props.dispatch({type:'home/getArticleList', params:{isRefresh:true}});
+			console.log(articleList, 'componentDidMount')
+			!articleList || articleList.length && this.props.dispatch({type:'home/getArticleList', params:{isRefresh:true}});
 		}catch(e){
 			console.log(e)
 		}
@@ -119,8 +119,7 @@ class Home extends React.Component{
 		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 		return(
-			<View style={[container.view__]}>
-				{isLoading && <View style={[flex.center, container.view__]}><Loading /></View>}	
+			<View style={[container.view___]}>
 				<ListView 
 					pageSize={10} 
 					enableEmptySections
@@ -129,7 +128,7 @@ class Home extends React.Component{
 					refreshControl={
 						<RefreshControl title="loading" colors={['#1abc9c']} refreshing={isRefreshing} onRefresh={this.onRefresh.bind(this)}/>
 					}
-					onEndReachedThreshold={20}
+					onEndReachedThreshold={40}
 					onEndReached={this.onEndReached.bind(this)}
 					renderFooter={this.renderFooter.bind(this)}
 				/>

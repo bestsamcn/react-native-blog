@@ -94,7 +94,7 @@ const MainNavigation = StackNavigator(
 		}
 	},
 	{
-		initialRouteName:'Splash',
+		initialRouteName:'Tab',
 	}
 )
 

@@ -18,6 +18,10 @@ export const container = StyleSheet.create({
 		width:width,
 		height:height-98
 	},
+	view___:{
+		width:width,
+		height:'100%'
+	},
 	height:{
 		height:height
 	},

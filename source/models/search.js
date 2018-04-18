@@ -16,8 +16,8 @@ export default {
 	subscriptions:{
 		async setup({dispatch}){
 			try{
-				let { articleList, total } = await global.storage.load({key:'article'});
 				let { hotword } = await global.storage.load({key:'hotword'});
+				console.log(hotword, 'asdfasdfasdfadfadsf')
 				dispatch({type:'setState', payload:{hotwordList:hotword}});
 			}catch(e){
 				console.log(e)

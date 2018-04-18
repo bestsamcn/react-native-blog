@@ -1,6 +1,8 @@
 package com.reactnativeblog;
-
+import android.os.Bundle;
 import com.facebook.react.ReactActivity;
+
+import org.devio.rn.splashscreen.SplashScreen; // HERE
 
 public class MainActivity extends ReactActivity {
 
@@ -11,5 +13,11 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "ReactNativeBlog";
+    }
+
+    @Override                                                   // HERE
+    protected void onCreate(Bundle savedInstanceState) {        // HERE
+        // SplashScreen.show(this, true);     // HERE                     
+        super.onCreate(savedInstanceState);                     // HERE
     }
 }
