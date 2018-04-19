@@ -151,7 +151,10 @@ export const WebHeader = ({navigation})=>{
 			</TouchableHighlight>
 		),
 		headerTitle:(
-			<Text style={[color.black, font.size20, {alignSelf:'center', textAlign:'center'}]}>文章详情</Text>
+			<View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+				<View><Text style={[color.black, font.size20]}>文章详情</Text></View>
+			</View>
+			
 		),
 		headerStyle:{
 			borderBottomWidth:1, 
