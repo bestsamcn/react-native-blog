@@ -17,6 +17,7 @@ class Search extends Component{
 		if(!hotword || !hotword.length){
 			this.props.dispatch({type:'search/getHotwordList', params:{}});
 		}
+       	this.props.navigation.setParams({_this:this});
 	}
 	onStartShouldSetResponder(){
 		Keyboard.dismiss();

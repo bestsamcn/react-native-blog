@@ -1,6 +1,6 @@
 import { getArticleList } from '../services/article';
 import { getHotwordList } from '@/services/search';
-
+import { NavigationActions } from 'react-navigation';
 
 export default {
 	namespace:'search',
@@ -36,7 +36,7 @@ export default {
 		*setKeyword({params}, {call, put, select}){
 			let { keyword } = params;
 			yield put({type:'setState', payload:{keyword, pageIndex:1}});
-			yield put({type:'getArticleList', params:{isRefresh:true}});
+			yield put({type:'getArticleList', params:{isRefresh:true, isSearch:true}});
 		},
 		//获取文章
 		*getArticleList({params}, {call, put, select}){
@@ -47,16 +47,21 @@ export default {
 				res = yield call(getArticleList, {keyword, pageIndex:1, pageSize});
 				pageIndex = 1;
 				articleList = res.data;
-				let searchRecord = global.storage.load({key:'searchRecord'}) || [];
-				if(!seasrchRecord.includes(keyword)){
-					searchRecord.push(keyword);
-				}else{
-					searchRecord.splice(searchRecord.indexOf(keyword), 1);
-					searchRecord.unshift(keyword);
-				}
-				global.storage.save({key:'searchRecord', data:{searchRecord}});
-				global.storage.save({key:'article', data:{articleList, total:res.total}});
 
+				//如果是搜索，保存搜索记录, 并跳转
+				if(!!params.isSearch){
+					let keywordList = global.storage.load({key:'keywordList'}) || [];
+					if(!keywordList.includes(keyword)){
+						keywordList.push(keyword);
+					}else{
+						keywordList.splice(keywordList.indexOf(keyword), 1);
+						keywordList.unshift(keyword);
+					}
+					global.storage.save({key:'keywordList', data:{keywordList}});
+					yield put({type:`NavigationActions/${NAVIGATE}`, payload:{name:'Result'}});
+					return false;
+				}
+				global.storage.save({key:'article', data:{articleList, total:res.total}});
 			}else{
 				yield put({type:'setState', payload:{isMoring:true}});
 				res = yield call(getArticleList, {keyword, pageIndex:pageIndex + 1, pageSize});
@@ -64,7 +69,6 @@ export default {
 					pageIndex = pageIndex + 1
 				}
 				articleList = articleList.concat(res.data);
-
 			}
 			total = res.total;
 			yield put({type:'setState', payload:{articleList, pageIndex, total, isRefreshing:false, isMoring:false}});

@@ -24,7 +24,6 @@ export default{
 			function*({call, put, take}){
 				while(true){
 					let payload = yield take(actions);
-					console.log(payload, 'ffffffffff')
 					yield put({type:'setState', payload});
 				}
 			}, {type:'watcher'}	

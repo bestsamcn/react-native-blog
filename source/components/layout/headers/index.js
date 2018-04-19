@@ -70,8 +70,12 @@ export const SearchHeader = ({navigation})=>{
 	}
 
 	//确定
-	let onOk = ()=>{
-		navigation.navigate('Result')
+	let onOk = (e)=>{
+		if(!e.nativeEvent.text){
+			return Keyboard.dismiss();
+		}
+		console.log(e.nativeEvent.text)
+		navigation.dispatch({type:'search', params:{keyword:e.nativeEvent.text}})
 	}
 	return {
 		headerLeft:null,
