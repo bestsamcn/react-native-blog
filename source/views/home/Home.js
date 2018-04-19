@@ -3,7 +3,7 @@ import { navigate } from 'react-navigation';
 import { Button, View, Text, ListView, RefreshControl, TextInput, TouchableHighlight  } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'dva/mobile';
-import { Loading } from '@/components/common';
+import { Loading, ArticleList } from '@/components/common';
 import { headerStyles } from '@/styles/home';
 import { HomeHeader } from '@/components/layout/headers';
 import { margin, color, font, flex, container } from '@/styles/base';
@@ -39,20 +39,6 @@ class Home extends React.Component{
 		if(isMoring || isRefreshing) return;
 		this.props.dispatch({type:'home/getArticleList', params:{}})
 	}
-	renderFooter(){
-		let { isMoring, pageIndex, pageSize, total } = this.props.home;
-		if(pageIndex * pageSize < total){
-			return <View style={[{width:'100%', height:40}, flex.center]}>
-				<Loading />
-				<Text style={{textAlign:'center', color:'#1abc9c', marginLeft:5}}>正在加载...</Text>
-			</View>
-		}else{
-			return <View style={[{width:'100%', height:40}, flex.center]}>
-				<Text style={{textAlign:'center', color:'#333'}}>没有更多了</Text>
-			</View>
-		}
-		
-	}
 	async componentWillMount(){
 		try{
 			let { articleList, total } = await global.storage.load({key:'article'});
@@ -61,74 +47,24 @@ class Home extends React.Component{
 		}
 		
 	}
-	navigate(article){
-		if(!article) return;
-		this.props.navigation.navigate('Web', { id: article._id});
-	}
-	renderRow(item){
-		return (
-			<TouchableHighlight 
-				style={{backgroundColor:'#fff', paddingHorizontal:20}} 
-				activeOpacity={0.5} 
-				underlayColor={color.green}  
-				onPress={this.navigate.bind(this, item)}
-			>
-				<View style={{borderColor:'#eee', borderBottomWidth:1, borderStyle:'solid', paddingVertical:20}}>
-					<Text style={[color.black, font.size18, font.bold]}>{item.title}</Text>
-					{/* 标签 */}
-					<View style={[margin.top10, flex.start]}>
-						<View style={[margin.right10, flex.start]}>
-							<Text style={[[margin.right5, font.size11], font.size11]}><Icon name="comment" style={{marginRight:20}} color="#bbb" size={13} /></Text>
-							<Text style={[margin.right5, font.size11]}>{item.commentNum}</Text>
-							<Text style={font.size11}>Comments</Text>
-						</View>
-						<View style={[margin.right10, flex.start]}>
-							<Text style={[margin.right5, font.size11]}><Icon name="eye" style={{marginRight:20}} color="#bbb" size={13} /></Text>
-							<Text style={[margin.right5, font.size11]}>{item.readNum}</Text>
-							<Text style={font.size11}>Views</Text>
-						</View>
-						<View style={[margin.right10, flex.start]}>
-							<Text style={[margin.right5, font.size11]}><Icon name="tag" style={{marginRight:20}} color="#bbb" size={13} /></Text>
-							<Text style={font.size11}>{item.tag ? item.tag.name : 'null'}</Text>
-						</View>
-					</View>
-					<Text style={[margin.top10, color.black1, font.size14]}>摘要：{item.previewText}</Text>
-					<View style={[margin.top10, flex.start]}>
-						<View style={margin.right10}>
-							<Text style={{borderRadius:2, paddingVertical:2, paddingHorizontal:4, borderStyle:'solid', borderColor:'#1abc9c', borderWidth:1, color:'#1abc9c', fontSize:12}}>{item.category ? item.category.name :'我可能被删了'}</Text>
-						</View>
-						<View style={[margin.right10, flex.start]}>
-							<Text style={[margin.right5, font.size11]}><Icon name="calendar" style={{marginRight:20}} color="#bbb" size={13} /></Text>
-							<Text style={font.size11}>{$$.dateFormat(item.createTime, 'yyyy-mm-dd')}</Text>
-						</View>
-						<View style={[margin.right10, flex.start]}>
-							<Text style={[margin.right5, font.size11]}><Icon name="edit" style={{marginRight:20}} color="#bbb" size={13} /></Text>
-							<Text style={font.size11}>{$$.dateFormat(item.lastEditTime, 'yyyy-mm-dd')}</Text>
-						</View>
-					</View>
-				</View>
-
-			</TouchableHighlight>
-		)
-	}
 	render(){
-		let { articleList, isRefreshing } = this.props.home;
+		let { articleList, isRefreshing, isMoring, total, pageIndex } = this.props.home;
 		let { isLoading } = this.props.global;
-		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+		let { navigation } = this.props;
+		
 
 		return(
 			<View style={[container.view___]}>
-				<ListView 
-					pageSize={10} 
-					enableEmptySections
+				<ArticleList 
+					navigation={navigation}
+					total={total}
+					pageIndex={pageIndex}
 					onScroll={this.onScroll.bind(this)} 
-					dataSource={ds.cloneWithRows(articleList)} renderRow={this.renderRow.bind(this)} 
-					refreshControl={
-						<RefreshControl title="loading" colors={['#1abc9c']} refreshing={isRefreshing} onRefresh={this.onRefresh.bind(this)}/>
-					}
-					onEndReachedThreshold={40}
+					articleList={articleList} 
+					onRefresh={this.onRefresh.bind(this)}
+					refreshing={isRefreshing}
+					isMoring={isMoring}
 					onEndReached={this.onEndReached.bind(this)}
-					renderFooter={this.renderFooter.bind(this)}
 				/>
 			</View>		
 		)

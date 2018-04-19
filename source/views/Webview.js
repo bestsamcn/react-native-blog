@@ -47,12 +47,18 @@ class Webview extends Component{
 		this.setState({isLoading:true});
 	}
 	onLoadEnd(){
-		this.setState({isLoading:false});
+		this.timer = setTimeout(()=>{
+			this.setState({isLoading:false});
+		},500)
+		
+	}
+	componentWillMount(){
+		this.timer && clearTimeout(this.timer);
 	}
 	renderLoading(){
 	    if(this.state.isLoading){
 	      	return (
-	      		<View style={[container.view, flex.center, bg.white, {position:'absolute', left:0, top:0}]}><Loading /></View>
+	      		<View style={[container.view_, flex.center, bg.white, {position:'absolute', left:0, top:0}]}><Loading /></View>
 	      	);
 	    }
 	 }

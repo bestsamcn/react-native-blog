@@ -1,4 +1,4 @@
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -18,7 +18,7 @@ class Loading extends Component{
 	}
 	render(){
 		return(
-			<ActivityIndicator {...this.props}/>
+			<View><ActivityIndicator {...this.props}/></View>
 		)
 	}
 }
