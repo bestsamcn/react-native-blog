@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ToastAndroid, BackHandler } from 'react-native';
+import { View, NetInfo, ToastAndroid, BackHandler } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { About, Message, Splash } from '@/views';
@@ -109,10 +109,17 @@ class Router extends React.Component{
         await SplashScreen.hide();
     }
     componentWillMount(){
+    	this.checkNetwork();
     	BackHandler.addEventListener('hardwareBackPress', this.onBackHandler.bind(this));
     }
     componentWillUnmount(){
     	BackHandler.removeEventListener('hardwareBackPress', this.onBackHandler.bind(this));
+    }
+    async checkNetwork(){
+		let isConnected = await NetInfo.isConnected.fetch();
+	    if(!isConnected){
+	        return ToastAndroid.show('世界上最遥远的距离是什么？', 1000);
+	    }
     }
     onBackHandler(){
     	if( this.lastBackPressTime && (Date.now() - this.lastBackPressTime < 2000)){

@@ -15,7 +15,7 @@ export default {
 		async setup({dispatch}){
 			try{
 				let { articleList, total } = await global.storage.load({key:'article'});
-				dispatch({type:'setState', payload:{pageIndex:1, total, articleList}});
+				!!articleList && !!articleList.length && dispatch({type:'setState', payload:{pageIndex:1, total, articleList}});
 			}catch(e){
 				console.log(e)
 			}
@@ -42,6 +42,7 @@ export default {
 				articleList = articleList.concat(res.data);
 
 			}
+			console.log(articleList, 'params')
 			total = res.total;
 			yield put({type:'setState', payload:{articleList, pageIndex, total, isRefreshing:false, isMoring:false}});
 		}

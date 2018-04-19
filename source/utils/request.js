@@ -1,6 +1,5 @@
-import {
-    API
-} from '../config';
+import { API } from '../config';
+import { NetInfo, ToastAndroid } from 'react-native';
 
 
 //格式化
@@ -10,11 +9,9 @@ function parseJSON(response) {
 
 //检查状态
 function checkStatus(response) {
-    
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
-
     const error = new Error(response.statusText);
     error.response = response;
     throw error;
@@ -35,7 +32,16 @@ function checkCode(data) {
  * @param  {object} [options] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
-export default function request(url, options) {
+export default async function request(url, options) {
+    
+    let isConnected = await NetInfo.isConnected.fetch();
+    if(!isConnected){
+        ToastAndroid.show('世界上最遥远的距离是什么？', 1000);
+        const error = new Error('netword error');
+        error.response = response;
+        throw error;
+        return ;
+    }
     // options.headers = {'x-access-token':TOKEN};
     options.headers = {};
     options.mode='cors';

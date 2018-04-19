@@ -53,12 +53,11 @@ class Home extends React.Component{
 		}
 		
 	}
-	async componentDidMount(){
+	async componentWillMount(){
 		try{
 			let { articleList, total } = await global.storage.load({key:'article'});
-			!articleList || articleList.length && this.props.dispatch({type:'home/getArticleList', params:{isRefresh:true}});
+			(!articleList || !articleList.length || articleList.length == 0) && this.props.dispatch({type:'home/getArticleList', params:{isRefresh:true}});
 		}catch(e){
-			console.log(e)
 		}
 		
 	}
@@ -114,6 +113,7 @@ class Home extends React.Component{
 	}
 	render(){
 		let { articleList, isRefreshing } = this.props.home;
+		console.log(articleList, 'fffffffffffffff')
 		let { isLoading } = this.props.global;
 		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 

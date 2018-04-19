@@ -17,8 +17,7 @@ export default {
 		async setup({dispatch}){
 			try{
 				let { hotword } = await global.storage.load({key:'hotword'});
-				console.log(hotword, 'asdfasdfasdfadfadsf')
-				dispatch({type:'setState', payload:{hotwordList:hotword}});
+				(!!hotword && !!hotword.length && hotword.length !=0) && dispatch({type:'setState', payload:{hotwordList:hotword}});
 			}catch(e){
 				console.log(e)
 			}
