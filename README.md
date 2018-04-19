@@ -25,6 +25,7 @@ react-native run-android
 
 ```
 ## 图片
+![piture](https://raw.githubusercontent.com/bestsamcn/react-native-blog/master/screenshots/screenshots.png)
 
 ## 预览
 - 项目总体完成，部分细节有待修改。
