@@ -113,7 +113,6 @@ class Home extends React.Component{
 	}
 	render(){
 		let { articleList, isRefreshing } = this.props.home;
-		console.log(articleList, 'fffffffffffffff')
 		let { isLoading } = this.props.global;
 		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 

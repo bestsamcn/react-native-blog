@@ -27,7 +27,7 @@ export default {
 		*getHotwordList({params}, {call, put, select}){
 			let res = yield call(getHotwordList, {});
 			console.log(res, '')
-			global.storage.save({key:'hotword', data:{hotwordList:res.data}});
+			global.storage.save({key:'hotword', data:{hotword:res.data}});
 			yield put({type:'setState', payload:{hotwordList:res.data}});
 		},
 		//获取文章
