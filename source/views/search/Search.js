@@ -14,7 +14,6 @@ class Search extends Component{
 	async componentWillMount(){
 		let { hotwordList } = this.props.search;
 		let { hotword } = await global.storage.load({key:'hotword'});
-		console.log(hotword, 'fffffffffffffffff')
 		if(!hotword || !hotword.length){
 			this.props.dispatch({type:'search/getHotwordList', params:{}});
 		}

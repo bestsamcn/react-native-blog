@@ -60,9 +60,7 @@ const TabNavigation = TabNavigator(
 	            borderStyle:'solid',
 	            borderTopColor:'#f1f1f1',
 	            borderTopWidth:1,
-	            shadowOffset:{width:0, height:0},
-	            shadowOpacity:0,
-
+				elevation: 0,
 	        },
 	        labelStyle: {
 	            fontSize: 12, // 文字大小,
@@ -95,7 +93,16 @@ const MainNavigation = StackNavigator(
 		}
 	},
 	{
-		initialRouteName:'Tab',
+		initialRouteName:'Search',
+		mode: 'modal',
+		navigationOptions:{
+			headerStyle:{
+	            borderBottomWidth:1, 
+			    elevation: 0,
+			    borderStyle:'solid',
+			    borderBottomColor:'#f6f6f6'
+	        }
+		}
 	}
 )
 @connect(state=>({...state}))
