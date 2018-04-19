@@ -18,16 +18,7 @@ export const ResultHeader = ({navigation})=>{
 		navigation.navigate('Result')
 	}
 	return {
-		headerLeft:(
-			<TouchableHighlight 
-				activeOpacity={0.5}
-				underlayColor="#f1f1f1"
-				onPress={()=>navigation.goBack()} 
-				style={{width:50, height:'100%', flex:1, justifyContent:'center', alignItems:'center'}}
-			>
-				<View><Icon name="arrow-left" color="#1abc9c" size={20}/></View>
-			</TouchableHighlight>
-		),
+		headerLeft:null,
 		headerTitle:(
 			<View style={{height:30,  width:'100%', position:'relative'}}>
 				<Icon style={{position:'absolute', zIndex:2, top:8, left:20}} name='search' size={14} color="#bbb"/>
@@ -83,6 +74,7 @@ export const SearchHeader = ({navigation})=>{
 		navigation.navigate('Result')
 	}
 	return {
+		headerLeft:null,
 		headerTitle:(
 			<View style={{height:30, paddingLeft:10, width:'100%', position:'relative'}}>
 				<Icon style={{position:'absolute', zIndex:2, top:8, left:20}} name='search' size={14} color="#bbb"/>
