@@ -71,12 +71,11 @@ export const SearchHeader = ({navigation})=>{
 
 	//确定
 	let onOk = (e)=>{
+		e.persist();
 		if(!e.nativeEvent.text){
 			return Keyboard.dismiss();
 		}
-		console.log(e.nativeEvent.text)
-		e.persist()
-		navigation.dispatch({type:'search', params:{keyword:e.nativeEvent.text}})
+		navigation.state.params.onTextOk(e.nativeEvent.text);
 	}
 	return {
 		headerLeft:null,

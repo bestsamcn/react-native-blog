@@ -58,7 +58,7 @@ export default {
 						keywordList.unshift(keyword);
 					}
 					global.storage.save({key:'keywordList', data:{keywordList}});
-					yield put({type:`NavigationActions/${NAVIGATE}`, payload:{name:'Result'}});
+					// yield put({type:`NavigationActions/${NAVIGATE}`, payload:{name:'Result'}});
 					return false;
 				}
 				global.storage.save({key:'article', data:{articleList, total:res.total}});

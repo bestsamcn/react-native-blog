@@ -17,7 +17,13 @@ class Search extends Component{
 		if(!hotword || !hotword.length){
 			this.props.dispatch({type:'search/getHotwordList', params:{}});
 		}
-       	this.props.navigation.setParams({_this:this});
+	}
+	//获取头部输入的字符
+	onTextOk(keyword){
+		console.log(keyword, 'ffffff')
+	}
+	componentDidMount(){
+		
 	}
 	onStartShouldSetResponder(){
 		Keyboard.dismiss();
