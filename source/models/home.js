@@ -42,7 +42,6 @@ export default {
 				articleList = articleList.concat(res.data);
 
 			}
-			console.log(articleList, 'params')
 			total = res.total;
 			yield put({type:'setState', payload:{articleList, pageIndex, total, isRefreshing:false, isMoring:false}});
 		}

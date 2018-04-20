@@ -2,6 +2,8 @@ import { getArticleList } from '@/services/article';
 import { getHotwordList } from '@/services/search';
 import { PAGE_SIZE } from './index';
 const sync ={
+
+	//文章缓存{articleList, total}
 	async article(params){
 		let { resolve, reject } = params;
 		try{
@@ -15,6 +17,7 @@ const sync ={
 			reject && reject(e.msg);
 		}
 	},
+
 	async hotword(params){
 		let { resolve, reject } = params;
 		try{

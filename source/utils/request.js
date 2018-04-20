@@ -44,7 +44,6 @@ export default async function request(url, options) {
     }
     // options.headers = {'x-access-token':TOKEN};
     options.headers = {};
-    options.mode='cors';
     options.headers['Content-Type'] = 'application/json';
     if(options.params){
         Object.keys(options.params).map((item, index)=>{

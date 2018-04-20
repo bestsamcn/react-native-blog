@@ -15,7 +15,7 @@ export const ResultHeader = ({navigation})=>{
 
 	//确定
 	let onOk = ()=>{
-		navigation.navigate('Result')
+		navigation.navigate('Result');
 	}
 	return {
 		headerLeft:null,
@@ -75,6 +75,7 @@ export const SearchHeader = ({navigation})=>{
 			return Keyboard.dismiss();
 		}
 		console.log(e.nativeEvent.text)
+		e.persist()
 		navigation.dispatch({type:'search', params:{keyword:e.nativeEvent.text}})
 	}
 	return {
@@ -95,7 +96,6 @@ export const SearchHeader = ({navigation})=>{
 				}}
 				selectionColor="#bbb"
 				autoFocus={true}
-				onSubmitEditing={onOk}
 				placeholderTextColor="#ccc"
 				placeholder="请输入关键字"
 				underlineColorAndroid='transparent'
