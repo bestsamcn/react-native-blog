@@ -12,15 +12,18 @@ export default {
 		keyword:'',
 		isMoring:false,
 		isRefreshing:false,
-		hotwordList:[]
+		hotwordList:[],
+		keywordList:[]
 	},
 	subscriptions:{
 		async setup({dispatch}){
 			try{
 				let { hotword } = await global.storage.load({key:'hotword'});
+				let { keywordList } = await global.storage.load({key:'keywordList'});
 				(!!hotword && !!hotword.length && hotword.length !=0) && dispatch({type:'setState', payload:{hotwordList:hotword}});
+				(!!keywordList && !!keywordList.length && keywordList.length !=0) && dispatch({type:'setState', payload:{keywordList}});
 			}catch(e){
-				console.log(e)
+				// console.log && console.log(e)
 			}
 		}
 	},
@@ -34,12 +37,15 @@ export default {
 		},
 		//设置关键字搜索
 		*setKeyword({params}, {call, put, select}){
-			let { keyword } = params;
-			yield put({type:'setState', payload:{keyword, pageIndex:1}});
-			yield put({type:'getArticleList', params:{isRefresh:true, isSearch:true}});
+			// let { keyword } = params;
+			// yield put({type:'setState', payload:{keyword, pageIndex:1}});
+			yield put(NavigationActions.navigate({ routeName: 'Result' }));
+
+			// yield put({type:'getArticleList', params:{isRefresh:true, isSearch:true}});
 		},
 		//获取文章
-		*getArticleList({params}, {call, put, select}){
+		* getArticleList({params}, {call, put, select}){
+
 			let { pageSize, pageIndex, isMore, isRefreshing, articleList, total, keyword } = yield select(state=>state.search);
 			let res = null;
 			if(params.isRefresh){
@@ -47,21 +53,23 @@ export default {
 				res = yield call(getArticleList, {keyword, pageIndex:1, pageSize});
 				pageIndex = 1;
 				articleList = res.data;
-
 				//如果是搜索，保存搜索记录, 并跳转
 				if(!!params.isSearch){
-					let keywordList = global.storage.load({key:'keywordList'}) || [];
-					if(!keywordList.includes(keyword)){
-						keywordList.push(keyword);
-					}else{
-						keywordList.splice(keywordList.indexOf(keyword), 1);
-						keywordList.unshift(keyword);
-					}
-					global.storage.save({key:'keywordList', data:{keywordList}});
-					// yield put({type:`NavigationActions/${NAVIGATE}`, payload:{name:'Result'}});
+					global.storage.load({key:'keywordList'}).then(res=>{
+						let { keywordList=[] } = res;
+						if(!keywordList.includes(keyword)){
+							keywordList.unshift(keyword);
+						}else{
+							keywordList.splice(keywordList.indexOf(keyword), 1);
+							keywordList.unshift(keyword);
+						}
+						global.app._store.dispatch({type:'search/setState', payload:{keywordList}});
+						global.storage.save({key:'keywordList', data:{keywordList}});
+					}).catch(err=>{
+						global.storage.save({key:'keywordList', data:{keywordList:[]}});
+					});
 					return false;
 				}
-				global.storage.save({key:'article', data:{articleList, total:res.total}});
 			}else{
 				yield put({type:'setState', payload:{isMoring:true}});
 				res = yield call(getArticleList, {keyword, pageIndex:pageIndex + 1, pageSize});

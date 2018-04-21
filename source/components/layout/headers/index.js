@@ -62,7 +62,6 @@ export const ResultHeader = ({navigation})=>{
 
 //搜索头部
 export const SearchHeader = ({navigation})=>{
-
 	//取消返回上一级
 	let onCancel = ()=>{
 		navigation.goBack();
@@ -71,11 +70,12 @@ export const SearchHeader = ({navigation})=>{
 
 	//确定
 	let onOk = (e)=>{
-		e.persist();
-		if(!e.nativeEvent.text){
-			return Keyboard.dismiss();
-		}
-		navigation.state.params.onTextOk(e.nativeEvent.text);
+		// e.persist();
+		// if(!e.nativeEvent.text){
+		// 	return Keyboard.dismiss();
+		// }
+		// navigation.navigate({routeName:'Result'})
+		navigation.onTextOk(e.nativeEvent.text);
 	}
 	return {
 		headerLeft:null,
@@ -95,6 +95,7 @@ export const SearchHeader = ({navigation})=>{
 				}}
 				selectionColor="#bbb"
 				autoFocus={true}
+				onSubmitEditing={onOk}
 				placeholderTextColor="#ccc"
 				placeholder="请输入关键字"
 				underlineColorAndroid='transparent'

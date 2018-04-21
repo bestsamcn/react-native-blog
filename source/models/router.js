@@ -1,6 +1,6 @@
 import { routerReducer } from '../router';
 import { NavigationActions } from 'react-navigation';
-
+export const createAction = type => payload => ({ type, payload })
 const actions = [
   	NavigationActions.BACK,
   	NavigationActions.INIT,
@@ -24,7 +24,9 @@ export default{
 			function*({call, put, take}){
 				while(true){
 					let payload = yield take(actions);
+					console.log(payload, 'ffffffffffffffffffffff')
 					yield put({type:'setState', payload});
+
 				}
 			}, {type:'watcher'}	
 		]

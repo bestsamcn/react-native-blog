@@ -65,7 +65,7 @@ class Webview extends Component{
 	render(){
 		
 		return(
-			<KeyboardAvoidingView style={[container.view, bg.white]} behavior="padding">
+			<KeyboardAvoidingView style={[container.view__, bg.white]} behavior="padding">
 				{this.renderWebview()}
 				{this.state.isLoading && this.renderLoading()}
 			</KeyboardAvoidingView>

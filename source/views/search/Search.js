@@ -20,16 +20,16 @@ class Search extends Component{
 	}
 	//获取头部输入的字符
 	onTextOk(keyword){
-		console.log(keyword, 'ffffff')
+		this.props.dispatch({type:'search/setKeyword', params:{keyword}});
 	}
 	componentDidMount(){
-		
+		this.props.navigation.onTextOk = this.onTextOk.bind(this);
 	}
 	onStartShouldSetResponder(){
 		Keyboard.dismiss();
 	}
 	render(){
-		let { hotwordList } = this.props.search;
+		let { hotwordList, keywordList } = this.props.search;
 		return(
 			<View style={[container.view, bg.white]} onStartShouldSetResponder={this.onStartShouldSetResponder.bind(this)}>
 				<View style={[margin.top20, padding.h10]}>
@@ -43,7 +43,10 @@ class Search extends Component{
 				<View style={[margin.top20, padding.h10]}>
 					<Text style={[color.black, font.size14]}><Icon name="fire" color="#2b4356"/>搜索记录：</Text>
 				</View>
-				<View>
+				<View style={[flex.start, padding.a10, {flexWrap:'wrap'}]}>
+					{!!keywordList && !!keywordList.length && keywordList.map((item, index)=>(
+						<TouchableHighlight key={index} style={[margin.right10, margin.top10]}><Text style={[font.size11, padding.v5, padding.h10, {borderColor:'#ddd', borderWidth:1, borderRadius:3}]}>{item}</Text></TouchableHighlight>
+					))}
 				</View>
 			</View>	
 		)

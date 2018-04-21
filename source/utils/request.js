@@ -26,11 +26,10 @@ function checkCode(data) {
 }
 
 /**
- * Requests a URL, returning a promise.
  *
- * @param  {string} url       The URL we want to request
- * @param  {object} [options] The options we want to pass to "fetch"
- * @return {object}           An object containing either "data" or "err"
+ * @param  {string} url       接口
+ * @param  {object} [options] 配置
+ * @return {object}           数据
  */
 export default async function request(url, options) {
     
@@ -42,19 +41,25 @@ export default async function request(url, options) {
         throw error;
         return ;
     }
-    // options.headers = {'x-access-token':TOKEN};
     options.headers = {};
     options.headers['Content-Type'] = 'application/json';
-    if(options.params){
+    // options.headers['x-access-token'] = '';
+    if(options.mothod != 'post'){
         Object.keys(options.params).map((item, index)=>{
             url+= index== 0 ? '?' : '&';
             url+= `${item}=${options.params[item]}`
         });
+    }else{
+        let _body = '';
+        Object.keys(options.params).map((item, index)=>{
+            _body+= index== 0 ? '' : '&';
+            _body+= `${item}=${options.params[item]}`
+        });
+        options.body = _body;
     }
     return fetch(API + url, options)
         .then(checkStatus)
         .then(parseJSON)
         .then(checkCode)
-        .catch(err => ({ err })
-    );
+        .catch(err => ({ err }));
 }

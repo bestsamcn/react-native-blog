@@ -93,7 +93,7 @@ const MainNavigation = StackNavigator(
 		}
 	},
 	{
-		initialRouteName:'Tab',
+		initialRouteName:'Search',
 		mode: 'modal',
 		navigationOptions:{
 			headerStyle:{

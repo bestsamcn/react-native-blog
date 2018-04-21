@@ -30,7 +30,14 @@ const sync ={
 			global.app._store.dispatch({type:'setLoading', params:{isLoading:false}});
 			reject && reject(e.msg)
 		}
-	}
+	},
+
+	async keywordList(params){
+		let { resolve, reject } = params;
+		resolve && resolve({keywordList:[]});
+		
+	},
+
 
 }
 export default sync;
