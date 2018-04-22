@@ -1,7 +1,10 @@
 package com.reactnativeblog;
+
+import android.content.Intent;
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
-
+import com.reactnativeblog.module.ShareModule;
+import com.umeng.socialize.UMShareAPI;
 import org.devio.rn.splashscreen.SplashScreen; // HERE
 
 public class MainActivity extends ReactActivity {
@@ -17,7 +20,8 @@ public class MainActivity extends ReactActivity {
 
     @Override                                                   // HERE
     protected void onCreate(Bundle savedInstanceState) {        // HERE
-        SplashScreen.show(this, true);     // HERE                     
-        super.onCreate(savedInstanceState);                     // HERE
+        SplashScreen.show(this, true);     // HERE    
+        super.onCreate(savedInstanceState); 
+        ShareModule.initActivity(this);  //share                 
     }
 }

@@ -18,11 +18,13 @@ class Result extends React.Component{
 			loadMore:false
 		}
 	}
+	//刷新
 	onRefresh(){
 		let { isMoring, isRefreshing } = this.props.search;
 		if(isMoring || isRefreshing) return;
 		this.props.dispatch({type:'search/getArticleList', params:{isRefresh:true}});
 	}
+	//滚动
 	onScroll(scrollView){
 		let contentHeight = scrollView.nativeEvent.contentSize.height;
 		let offsetY = scrollView.nativeEvent.contentOffset.y;
@@ -36,11 +38,13 @@ class Result extends React.Component{
 	componentWillUnmount(){
 		this.props.dispatch({type:'search/setState', payload:{articleList:[], pageIndex:1, total:11, keyword:''}});
 	}
+	//滚动底部回调
 	onEndReached(){
 		let { isMoring, isRefreshing } = this.props.search;
 		if(isMoring || isRefreshing) return;
 		this.props.dispatch({type:'search/getArticleList', params:{}})
 	}
+	
 	render(){
 		let { articleList, isRefreshing, isMoring, total, pageIndex } = this.props.search;
 		let { isLoading } = this.props.global;

@@ -175,7 +175,8 @@ MainNavigation.router.getStateForAction = (action, state) => {
 	if (action.type === NavigationActions.NAVIGATE) {
 		const { routeName, params } = action;
 		const lastRoute = state.routes[state.routes.length - 1];
-		console.log(lastRoute.routeName, params, lastRoute.params, 'dddddddddddddddd')
+
+		//解决快速点击导致重复跳转的问题
 		if (routeName === lastRoute.routeName && JSON.stringify(params) === JSON.stringify(lastRoute.params)) {
 			return { ...state };
 		}

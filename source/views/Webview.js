@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { color, font, bg, flex, container } from '@/styles/base';
 import { WebHeader } from '@/components/layout/headers';
 
+
 let { width, height } = Dimensions.get('window');
 class Webview extends Component{
 	static navigationOptions = WebHeader;

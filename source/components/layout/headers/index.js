@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableHighlight, TextInput, StyleSheet, Keyboard, Share } from 'react-native';
+import { View, Text, TouchableHighlight, TextInput, StyleSheet, Keyboard } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { color, font, flex, container, margin } from '@/styles/base';
 import { ARTICLE_URL } from '@/config';
-
+import { Share, SharePlatform } from '@/components/common';
 
 //搜索结果头部 
 export const ResultHeader = ({navigation})=>{
@@ -18,6 +18,7 @@ export const ResultHeader = ({navigation})=>{
 	let onOk = ()=>{
 		navigation.navigate('Result');
 	}
+
 	return {
 		headerLeft:null,
 		headerTitle:(
@@ -152,19 +153,11 @@ export const HomeHeader = ({navigation})=>({
 export const WebHeader = ({navigation})=>{
 	let { article } = navigation.state.params;
 	let shareArticle = () => {
-		Share.share({
-				message: `${article.title}`,
-				url: ARTICLE_URL+article.id,
-				title: article.title
-			}, {
-				dialogTitle: '分享文章',
-				excludedActivityTypes: [
-					'com.apple.UIKit.activity.PostToTwitter'
-				],
-				tintColor: 'green'
-			})
-			.then(ret=>console.log(ret))
-			.catch((error) =>console.log(error));
+		Share.share('Best', article.title, 'http://baidu.com','http://dev.umeng.com/images/tab2_1.png', SharePlatform.QQ, (message) => {
+        	console.log(message, 'ffffffffffff')
+            // message: 分享成功、分享失败、取消分享
+            // TODO ... 
+        });
 	}
 	return {
 		headerLeft:(
