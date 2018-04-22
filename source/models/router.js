@@ -1,9 +1,5 @@
-import {
-	routerReducer
-} from '../router';
-import {
-	NavigationActions
-} from 'react-navigation';
+import { routerReducer } from '../router';
+import { NavigationActions } from 'react-navigation';
 const actions = [
 	NavigationActions.BACK,
 	NavigationActions.INIT,

@@ -28,48 +28,52 @@ export default {
 		}
 	},
 	effects:{
+		//清除搜索记录
+		*clearKeyword({params}, {call, put, select}){
+			global.storage.save({key:'keywordList', data:{keywordList:[]}});
+			yield put({type:'setState', payload:{keywordList:[]}});
+		},
 		//获取热词列表
 		*getHotwordList({params}, {call, put, select}){
 			let res = yield call(getHotwordList, {});
-			console.log(res, '')
 			global.storage.save({key:'hotword', data:{hotword:res.data}});
 			yield put({type:'setState', payload:{hotwordList:res.data}});
 		},
 		//设置关键字搜索
 		*setKeyword({params}, {call, put, select}){
-			// let { keyword } = params;
-			// yield put({type:'setState', payload:{keyword, pageIndex:1}});
-			yield put(NavigationActions.navigate({ routeName: 'Result' }));
-
-			// yield put({type:'getArticleList', params:{isRefresh:true, isSearch:true}});
+			let { hotwordList } = yield select(state=>state.search);
+			let { keyword } = params;
+			yield put({type:'setState', payload:{keyword, pageIndex:1}});
+			yield put(NavigationActions.navigate({routeName: 'Result', params:{keyword, hotwordList}}));
+			yield put({type:'getArticleList', params:{isRefresh:true, isSearch:true}});
 		},
 		//获取文章
 		* getArticleList({params}, {call, put, select}){
-
 			let { pageSize, pageIndex, isMore, isRefreshing, articleList, total, keyword } = yield select(state=>state.search);
 			let res = null;
+			//刷新
 			if(params.isRefresh){
 				yield put({type:'setState', payload:{isRefreshing:true}});
 				res = yield call(getArticleList, {keyword, pageIndex:1, pageSize});
 				pageIndex = 1;
 				articleList = res.data;
-				//如果是搜索，保存搜索记录, 并跳转
-				if(!!params.isSearch){
-					global.storage.load({key:'keywordList'}).then(res=>{
-						let { keywordList=[] } = res;
-						if(!keywordList.includes(keyword)){
-							keywordList.unshift(keyword);
-						}else{
-							keywordList.splice(keywordList.indexOf(keyword), 1);
-							keywordList.unshift(keyword);
-						}
-						global.app._store.dispatch({type:'search/setState', payload:{keywordList}});
-						global.storage.save({key:'keywordList', data:{keywordList}});
-					}).catch(err=>{
-						global.storage.save({key:'keywordList', data:{keywordList:[]}});
-					});
-					return false;
-				}
+
+				//如果是搜索，保存搜索记录
+				!!params.isSearch && global.storage.load({key:'keywordList'}).then(ret=>{
+					let { keywordList=[] } = ret;
+					if(!keywordList.includes(keyword)){
+						keywordList.unshift(keyword);
+					}else{
+						keywordList.splice(keywordList.indexOf(keyword), 1);
+						keywordList.unshift(keyword);
+					}
+					global.app._store.dispatch({type:'search/setState', payload:{keywordList}});
+					global.storage.save({key:'keywordList', data:{keywordList}});
+				}).catch(err=>{
+					global.storage.save({key:'keywordList', data:{keywordList:[]}});
+				});
+
+			//加载更多
 			}else{
 				yield put({type:'setState', payload:{isMoring:true}});
 				res = yield call(getArticleList, {keyword, pageIndex:pageIndex + 1, pageSize});

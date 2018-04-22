@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, NetInfo, ToastAndroid, BackHandler } from 'react-native';
-import { StackNavigator, TabNavigator, addNavigationHelpers } from 'react-navigation';
+import { StackNavigator, TabNavigator, addNavigationHelpers, NavigationActions } from 'react-navigation';
 import { initializeListeners, createReduxBoundAddListener, createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { About, Message, Splash } from '@/views';
@@ -94,7 +94,7 @@ const MainNavigation = StackNavigator(
 		}
 	},
 	{
-		initialRouteName:'Search',
+		initialRouteName:'Tab',
 		mode: 'modal',
 		navigationOptions:{
 			headerStyle:{
@@ -112,7 +112,6 @@ class Router extends React.Component{
 		super(props);
 	}
 	async componentDidMount() {
-        // do anything while splash screen keeps, use await to wait for an async task.
         initializeListeners('root', this.props.router)
         await delay(500);
         await SplashScreen.hide();
@@ -124,23 +123,41 @@ class Router extends React.Component{
     componentWillUnmount(){
     	BackHandler.removeEventListener('hardwareBackPress', this.onBackHandler.bind(this));
     }
+    //查看网络信息
     async checkNetwork(){
 		let isConnected = await NetInfo.isConnected.fetch();
 	    if(!isConnected){
 	        return ToastAndroid.show('世界上最遥远的距离是什么？', 1000);
 	    }
     }
+    //返回键控制
     onBackHandler(){
-    	if( this.lastBackPressTime && (Date.now() - this.lastBackPressTime < 2000)){
-    		return BackHandler.exitApp();
+    	const currentScreen = this.getCurrentScreen(this.props.router);
+	    if (currentScreen !== 'HomeTab' && currentScreen !== 'AboutTab' && currentScreen!== 'MessageTab') {
+	      	this.props.dispatch(NavigationActions.back())
+	      	return true
+	    }
+	    if(this.lastBackPressTime && (Date.now() - this.lastBackPressTime < 2000)){
+    		return false;
     	}
     	this.lastBackPressTime = Date.now() ;
     	ToastAndroid.show('再点击一次退出', 2000);
     	return true;
     }
+    //获取当前页面
+    getCurrentScreen(navigationState) {
+	  	if (!navigationState) {
+	    	return null
+	  	}
+	  	const route = navigationState.routes[navigationState.index]
+	  	if (route.routes) {
+	   		return this.getCurrentScreen(route);
+	  	}
+	  	return route.routeName;
+	}
 	render(){
 		let { dispatch, router } = this.props;
-		const addListener = createReduxBoundAddListener('root')
+		const addListener = createReduxBoundAddListener('root');
 		let navigation = addNavigationHelpers({dispatch, state:router, addListener});
 		return(
 			<MainNavigation navigation={navigation} />

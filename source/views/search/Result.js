@@ -33,6 +33,9 @@ class Result extends React.Component{
 			this.setState({loadMore:false});
 		}
 	}
+	componentWillUnmount(){
+		this.props.dispatch({type:'search/setState', payload:{articleList:[], pageIndex:1, total:11, keyword:''}});
+	}
 	onEndReached(){
 		let { isMoring, isRefreshing } = this.props.search;
 		if(isMoring || isRefreshing) return;

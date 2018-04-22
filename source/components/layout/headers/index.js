@@ -20,7 +20,7 @@ export const ResultHeader = ({navigation})=>{
 	return {
 		headerLeft:null,
 		headerTitle:(
-			<View style={{height:30,  width:'100%', position:'relative'}}>
+			<View style={{height:30,  width:'100%', paddingLeft:10, position:'relative'}}>
 				<Icon style={{position:'absolute', zIndex:2, top:8, left:20}} name='search' size={14} color="#bbb"/>
 				<TextInput style={{
 					borderRadius: 30,
@@ -34,10 +34,11 @@ export const ResultHeader = ({navigation})=>{
 				   	color:'#bbb',
 				}}
 				selectionColor="#bbb"
-				autoFocus={true}
+				autoFocus={false}
 				onSubmitEditing={onOk}
 				placeholderTextColor="#ccc"
 				placeholder="请输入关键字"
+				defaultValue={navigation.state.params.keyword }
 				underlineColorAndroid='transparent'
 				/>
 			</View>
@@ -67,16 +68,15 @@ export const SearchHeader = ({navigation})=>{
 		navigation.goBack();
 		Keyboard.dismiss();
 	}
-
+	let textInput = null;
+	let placeholder = navigation.state.params.hotword;
 	//确定
 	let onOk = (e)=>{
-		// e.persist();
-		// if(!e.nativeEvent.text){
-		// 	return Keyboard.dismiss();
-		// }
-		// navigation.navigate({routeName:'Result'})
-		navigation.onTextOk(e.nativeEvent.text);
+		e.persist();
+		!!textInput && textInput.clear()
+		navigation.onTextOk && navigation.onTextOk(e.nativeEvent.text || placeholder);
 	}
+
 	return {
 		headerLeft:null,
 		headerTitle:(
@@ -91,13 +91,14 @@ export const SearchHeader = ({navigation})=>{
 				  	borderColor:'#eee',
 				   	paddingHorizontal:10,
 				   	paddingLeft:30,
-				   	color:'#bbb',
+				   	color:'#333',
 				}}
+				ref={ref=>textInput = ref}
 				selectionColor="#bbb"
 				autoFocus={true}
 				onSubmitEditing={onOk}
 				placeholderTextColor="#ccc"
-				placeholder="请输入关键字"
+				placeholder="react"
 				underlineColorAndroid='transparent'
 				/>
 			</View>
@@ -129,7 +130,12 @@ export const HomeHeader = ({navigation})=>({
 		</View>
 	),
 	headerRight:(
-		<TouchableHighlight style={{padding:15, height:'100%', flex:1, alignItems:'center'}} onPress={navigation.navigate.bind(navigation, 'Search')} underlayColor={color.green} activeOpacity={0.5}>
+		<TouchableHighlight 
+			style={{padding:15, height:'100%', flex:1, alignItems:'center'}} 
+			onPress={()=>navigation.onHeaderRightClick()} 
+			underlayColor={color.green} 
+			activeOpacity={0.5}
+		>
 			<Icon name='search' size={24} color='#2b4356'/>
 		</TouchableHighlight>
 	),

@@ -8,6 +8,7 @@ import { headerStyles } from '@/styles/home';
 import { HomeHeader } from '@/components/layout/headers';
 import { margin, color, font, flex, container } from '@/styles/base';
 import * as $$ from '@/utils';
+import { HOT_WORD } from '@/config';
 
 @connect(state=>({...state}))
 class Home extends React.Component{
@@ -33,6 +34,15 @@ class Home extends React.Component{
 		}else{
 			this.setState({loadMore:false});
 		}
+	}
+	onHeaderRightClick(){
+		let { hotwordList } = this.props.search;
+		let name = !!hotwordList && !!hotwordList[0] && hotwordList[0].name || HOT_WORD;
+		this.props.navigation.navigate({routeName:'Search', params:{hotword:name}})
+
+	}
+	componentDidMount(){
+		this.props.navigation.onHeaderRightClick = this.onHeaderRightClick.bind(this);
 	}
 	onEndReached(){
 		let { isMoring, isRefreshing } = this.props.home;

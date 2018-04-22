@@ -25,27 +25,60 @@ class Search extends Component{
 	componentDidMount(){
 		this.props.navigation.onTextOk = this.onTextOk.bind(this);
 	}
+	//活动或者点击屏幕键盘收起
 	onStartShouldSetResponder(){
 		Keyboard.dismiss();
+	}
+	//清除搜索记录
+	clearKeyword(){
+		this.props.dispatch({type:'search/clearKeyword', params:{}});
 	}
 	render(){
 		let { hotwordList, keywordList } = this.props.search;
 		return(
 			<View style={[container.view, bg.white]} onStartShouldSetResponder={this.onStartShouldSetResponder.bind(this)}>
-				<View style={[margin.top20, padding.h10]}>
+				{!!hotwordList && !!hotwordList.length &&<View style={[margin.top20, padding.h10]}>
 					<Text style={[color.black, font.size14]}><Icon name="fire" color="#2b4356"/>热门搜索：</Text>
-				</View>
+				</View>}
 				<View style={[flex.start, padding.a10, {flexWrap:'wrap'}]}>
 					{!!hotwordList && !!hotwordList.length && hotwordList.map(item=>(
-						<TouchableHighlight key={item._id} style={[margin.right10, margin.top10]}><Text style={[font.size11, padding.v5, padding.h10, {borderColor:'#ddd', borderWidth:1, borderRadius:3}]}>{item.name}</Text></TouchableHighlight>
+						<TouchableHighlight 
+							key={item._id} 
+							onPress={this.onTextOk.bind(this, item.name)}
+							activeOpacity={0.5}
+							underlayColor="#fff"
+							style={[margin.right10, margin.top10]}
+						>
+							<Text style={[font.size11, padding.v5, padding.h10, {borderColor:'#ddd', borderWidth:1, borderRadius:3}]}>
+								{item.name}
+							</Text>
+						</TouchableHighlight>
 					))}
 				</View>
-				<View style={[margin.top20, padding.h10]}>
+				{!!keywordList && !!keywordList.length && <View style={[margin.top20, padding.h10, {position:'relative'}]}>
 					<Text style={[color.black, font.size14]}><Icon name="fire" color="#2b4356"/>搜索记录：</Text>
-				</View>
+					<TouchableHighlight 
+						onPress={this.clearKeyword.bind(this)} 
+						style={{padding:4, position:'absolute', top:0, right:10}}
+						activeOpacity={0.5}
+						underlayColor="#fff"
+					>
+						<Icon name="trash" size={14} color="#bbb" />
+					</TouchableHighlight>
+				</View>}
 				<View style={[flex.start, padding.a10, {flexWrap:'wrap'}]}>
 					{!!keywordList && !!keywordList.length && keywordList.map((item, index)=>(
-						<TouchableHighlight key={index} style={[margin.right10, margin.top10]}><Text style={[font.size11, padding.v5, padding.h10, {borderColor:'#ddd', borderWidth:1, borderRadius:3}]}>{item}</Text></TouchableHighlight>
+						<TouchableHighlight 
+							key={index} 
+							activeOpacity={0.5}
+							underlayColor="#fff"
+							onPress={this.onTextOk.bind(this, item)} 
+							style={[margin.right10, margin.top10]}
+						>
+							<Text style={[font.size11, padding.v5, padding.h10, {borderColor:'#ddd', borderWidth:1, borderRadius:3}]}>
+								{item}
+							</Text>
+						</TouchableHighlight>
 					))}
 				</View>
 			</View>	
