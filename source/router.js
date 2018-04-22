@@ -167,10 +167,22 @@ class Router extends React.Component{
 export default Router;
 
 export const routerMiddleware = createReactNavigationReduxMiddleware(
-  'root',
-  state => state.router
+	'root',
+	state => state.router
 )
-
-export const routerReducer = (state, action={})=>{
+const defaultGetStateForAction = MainNavigation.router.getStateForAction;
+MainNavigation.router.getStateForAction = (action, state) => {
+	if (action.type === NavigationActions.NAVIGATE) {
+		const { routeName, params } = action;
+		const lastRoute = state.routes[state.routes.length - 1];
+		console.log(lastRoute.routeName, params, lastRoute.params, 'dddddddddddddddd')
+		if (routeName === lastRoute.routeName && JSON.stringify(params) === JSON.stringify(lastRoute.params)) {
+			return { ...state };
+		}
+	}
+	return defaultGetStateForAction(action, state);
+};
+export const routerReducer = (state, action = {}) => {
 	return MainNavigation.router.getStateForAction(action, state);
 }
+
