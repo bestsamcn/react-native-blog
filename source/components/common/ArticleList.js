@@ -60,7 +60,7 @@ class ArticleList extends React.Component{
 	navigate(article){
 		if(!article) return;
 		console.log(this.props)
-		this.props.navigation.navigate('Web', { id: article._id});
+		this.props.navigation.navigate('Web', { id: article._id, article});
 	}
 	//渲染行
 	renderRow(item){

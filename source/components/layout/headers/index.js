@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableHighlight, TextInput, StyleSheet, Keyboard } from 'react-native';
+import { View, Text, TouchableHighlight, TextInput, StyleSheet, Keyboard, Share } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { color, font, flex, container, margin } from '@/styles/base';
+import { ARTICLE_URL } from '@/config';
 
 
 //搜索结果头部 
@@ -149,6 +150,22 @@ export const HomeHeader = ({navigation})=>({
 
 //浏览器头部
 export const WebHeader = ({navigation})=>{
+	let { article } = navigation.state.params;
+	let shareArticle = () => {
+		Share.share({
+				message: `${article.title}`,
+				url: ARTICLE_URL+article.id,
+				title: article.title
+			}, {
+				dialogTitle: '分享文章',
+				excludedActivityTypes: [
+					'com.apple.UIKit.activity.PostToTwitter'
+				],
+				tintColor: 'green'
+			})
+			.then(ret=>console.log(ret))
+			.catch((error) =>console.log(error));
+	}
 	return {
 		headerLeft:(
 			<TouchableHighlight 
@@ -173,7 +190,16 @@ export const WebHeader = ({navigation})=>{
 		    borderStyle:'solid',
 		    borderBottomColor:'#f6f6f6',
 		},
-        headerRight:<View />
+        headerRight:(
+			<TouchableHighlight 
+				activeOpacity={0.5}
+				underlayColor="#f1f1f1"
+				onPress={()=>shareArticle()} 
+				style={{width:50, height:'100%', flex:1, justifyContent:'center', alignItems:'center'}}
+			>
+				<View><Icon name="share-square-o" color="#1abc9c" size={20}/></View>
+			</TouchableHighlight>
+		)
 	}
 }
 
