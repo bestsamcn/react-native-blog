@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, NetInfo, ToastAndroid, BackHandler } from 'react-native';
-import { StackNavigator, TabNavigator } from 'react-navigation';
+import { StackNavigator, TabNavigator, addNavigationHelpers } from 'react-navigation';
+import { initializeListeners, createReduxBoundAddListener, createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { About, Message, Splash } from '@/views';
 import HomeStack from '@/views/home';
@@ -105,13 +106,14 @@ const MainNavigation = StackNavigator(
 		}
 	}
 )
-@connect(state=>({...state}))
+@connect(({ router }) => ({ router }))
 class Router extends React.Component{
 	constructor(props){
 		super(props);
 	}
 	async componentDidMount() {
         // do anything while splash screen keeps, use await to wait for an async task.
+        initializeListeners('root', this.props.router)
         await delay(500);
         await SplashScreen.hide();
     }
@@ -137,13 +139,20 @@ class Router extends React.Component{
     	return true;
     }
 	render(){
+		let { dispatch, router } = this.props;
+		const addListener = createReduxBoundAddListener('root')
+		let navigation = addNavigationHelpers({dispatch, state:router, addListener});
 		return(
-			<MainNavigation />
+			<MainNavigation navigation={navigation} />
 		)
 	}
 }
 export default Router;
 
+export const routerMiddleware = createReactNavigationReduxMiddleware(
+  'root',
+  state => state.router
+)
 
 export const routerReducer = (state, action={})=>{
 	return MainNavigation.router.getStateForAction(action, state);

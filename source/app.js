@@ -2,8 +2,9 @@ import React from 'react';
 import Storage from 'react-native-storage';
 import { AsyncStorage } from 'react-native';
 
+
 import dva from 'dva/mobile';
-import Router from './router';
+import Router, { routerMiddleware } from './router';
 import sync from './config/storage';
 import _models from './models';
 
@@ -16,6 +17,7 @@ global.storage = new Storage({
 });
 
 global.app = dva({
+	onAction:[routerMiddleware],
 	onError(e) {
 		console.log('onError', e)
 	}
