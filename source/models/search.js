@@ -11,7 +11,7 @@ export default {
 		total:11,
 		keyword:'',
 		isMoring:false,
-		isRefreshing:false,
+		isRefreshing:true,
 		hotwordList:[],
 		keywordList:[]
 	},
@@ -42,9 +42,12 @@ export default {
 		//设置关键字搜索
 		*setKeyword({params}, {call, put, select}){
 			let { hotwordList } = yield select(state=>state.search);
+			let { routes } = yield select(state=>state.router);
 			let { keyword } = params;
 			yield put({type:'setState', payload:{keyword, pageIndex:1}});
-			yield put(NavigationActions.navigate({routeName: 'Result', params:{keyword, hotwordList}}));
+			if(routes[routes.length-1].routeName != 'Result'){
+				yield put(NavigationActions.navigate({routeName: 'Result', params:{keyword, hotwordList}}));
+			}
 			yield put({type:'getArticleList', params:{isRefresh:true, isSearch:true}});
 		},
 		//获取文章
@@ -83,7 +86,10 @@ export default {
 				articleList = articleList.concat(res.data);
 			}
 			total = res.total;
-			yield put({type:'setState', payload:{articleList, pageIndex, total, isRefreshing:false, isMoring:false}});
+			yield put({type:'setState', payload:{articleList, pageIndex, total, isMoring:false}});
+			setTimeout(()=>{
+				// global.app._store.dispatch({type:'search/setState', payload:{isRefreshing:false}});
+			}, 2000)
 		}
 	},
 	reducers:{

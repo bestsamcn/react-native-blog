@@ -1,6 +1,6 @@
 import React from 'react';
 import { navigate } from 'react-navigation';
-import { Button, View, Text, ListView, RefreshControl, TextInput, TouchableHighlight  } from 'react-native';
+import { Button, View, Text, ListView, RefreshControl, TextInput, TouchableHighlight, Keyboard  } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'dva/mobile';
 import { Loading, ArticleList } from '@/components/common';
@@ -35,6 +35,14 @@ class Result extends React.Component{
 			this.setState({loadMore:false});
 		}
 	}
+	//获取头部输入的字符
+	onTextOk(keyword){
+		Keyboard.dismiss();
+		this.props.dispatch({type:'search/setKeyword', params:{keyword}});
+	}
+	componentDidMount(){
+		this.props.navigation.onTextOk = this.onTextOk.bind(this);
+	}
 	componentWillUnmount(){
 		this.props.dispatch({type:'search/setState', payload:{articleList:[], pageIndex:1, total:11, keyword:''}});
 	}
@@ -47,6 +55,7 @@ class Result extends React.Component{
 	
 	render(){
 		let { articleList, isRefreshing, isMoring, total, pageIndex } = this.props.search;
+		console.log(isRefreshing, 'dddddddddddd')
 		let { isLoading } = this.props.global;
 		let { navigation } = this.props;
 		return(

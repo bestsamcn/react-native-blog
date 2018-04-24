@@ -61,7 +61,7 @@ class Home extends React.Component{
 		let { articleList, isRefreshing, isMoring, total, pageIndex } = this.props.home;
 		let { isLoading } = this.props.global;
 		let { navigation } = this.props;
-		
+		console.log(isRefreshing, 'ffffffff')
 
 		return(
 			<View style={[container.view___]}>

@@ -20,6 +20,7 @@ class Search extends Component{
 	}
 	//获取头部输入的字符
 	onTextOk(keyword){
+		Keyboard.dismiss();
 		this.props.dispatch({type:'search/setKeyword', params:{keyword}});
 	}
 	componentDidMount(){

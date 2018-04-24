@@ -8,22 +8,46 @@ import { Share, SharePlatform } from '@/components/common';
 //搜索结果头部 
 export const ResultHeader = ({navigation})=>{
 
-	//取消返回上一级
-	let onCancel = ()=>{
-		navigation.goBack();
-		Keyboard.dismiss();
+	let _text = navigation.state.params.keyword || '';
+
+	let _placeholder = !!navigation.state.params.hotwordList &&　!!navigation.state.params.hotwordList.length　&& navigation.state.params.hotwordList[0].name || ''
+	
+	//搜索
+	let onSearch = ()=>{
+		if(!_text){
+			navigation.onTextOk && navigation.onTextOk(_placeholder);
+			return false;
+		}
+		navigation.onTextOk && navigation.onTextOk(_text);
+	}
+
+	
+	//input修改
+	let onChangeText = (text)=>{
+		_text = text;
 	}
 
 	//确定
-	let onOk = ()=>{
-		navigation.navigate('Result');
+	let onOk = (e)=>{
+		e.persist();
+		navigation.onTextOk && navigation.onTextOk(e.nativeEvent.text || _placeholder);
 	}
 
+
 	return {
-		headerLeft:null,
+		headerLeft:(
+			<TouchableHighlight 
+				activeOpacity={0.5}
+				underlayColor="#f1f1f1"
+				onPress={()=>navigation.goBack()} 
+				style={{width:50, height:'100%', flex:1, justifyContent:'center', alignItems:'center'}}
+			>
+				<View><Icon name="arrow-left" color="#1abc9c" size={20}/></View>
+			</TouchableHighlight>
+		),
 		headerTitle:(
-			<View style={{height:30,  width:'100%', paddingLeft:10, position:'relative'}}>
-				<Icon style={{position:'absolute', zIndex:2, top:8, left:20}} name='search' size={14} color="#bbb"/>
+			<View style={{height:30,  width:'100%', position:'relative'}}>
+				<Icon style={{position:'absolute', zIndex:2, top:8, left:10}} name='search' size={14} color="#bbb"/>
 				<TextInput style={{
 					borderRadius: 30,
 				  	borderWidth: 1,
@@ -33,14 +57,15 @@ export const ResultHeader = ({navigation})=>{
 				  	borderColor:'#eee',
 				   	paddingHorizontal:10,
 				   	paddingLeft:30,
-				   	color:'#bbb',
+				   	color:'#333',
 				}}
 				selectionColor="#bbb"
-				autoFocus={false}
+				autoFocus={!1}
+				onChangeText={onChangeText}
 				onSubmitEditing={onOk}
 				placeholderTextColor="#ccc"
-				placeholder="请输入关键字"
-				defaultValue={navigation.state.params.keyword }
+				placeholder={_placeholder}
+				defaultValue={_text}
 				underlineColorAndroid='transparent'
 				/>
 			</View>
@@ -55,9 +80,9 @@ export const ResultHeader = ({navigation})=>{
 				}}
 				activeOpacity={0.5}
 				underlayColor="#fff"
-				onPress={onCancel}
+				onPress={onSearch}
 			>
-				<View><Text style={{fontSize:16, color:'#1abc9c'}}>取消</Text></View>
+				<View><Text style={{fontSize:16, color:'#1abc9c'}}>搜索</Text></View>
 			</TouchableHighlight>
 		)
 	}
@@ -100,7 +125,7 @@ export const SearchHeader = ({navigation})=>{
 				autoFocus={true}
 				onSubmitEditing={onOk}
 				placeholderTextColor="#ccc"
-				placeholder="react"
+				placeholder={placeholder}
 				underlineColorAndroid='transparent'
 				/>
 			</View>

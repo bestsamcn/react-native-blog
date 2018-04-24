@@ -133,6 +133,7 @@ class Router extends React.Component{
     //返回键控制
     onBackHandler(){
     	const currentScreen = this.getCurrentScreen(this.props.router);
+
 	    if (currentScreen !== 'HomeTab' && currentScreen !== 'AboutTab' && currentScreen!== 'MessageTab') {
 	      	this.props.dispatch(NavigationActions.back())
 	      	return true
