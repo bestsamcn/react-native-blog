@@ -9,7 +9,6 @@ const actions = [
 	NavigationActions.URI,
 ]
 
-
 export default {
 	namespace: 'router',
 	state: {

@@ -50,12 +50,12 @@ class Result extends React.Component{
 	onEndReached(){
 		let { isMoring, isRefreshing } = this.props.search;
 		if(isMoring || isRefreshing) return;
-		this.props.dispatch({type:'search/getArticleList', params:{}})
+		this.props.dispatch({type:'search/getArticleList', params:{}});
 	}
 	
 	render(){
 		let { articleList, isRefreshing, isMoring, total, pageIndex } = this.props.search;
-		console.log(isRefreshing, 'dddddddddddd')
+		console.log(isRefreshing, 'result render')
 		let { isLoading } = this.props.global;
 		let { navigation } = this.props;
 		return(
@@ -67,7 +67,7 @@ class Result extends React.Component{
 					onScroll={this.onScroll.bind(this)} 
 					articleList={articleList} 
 					onRefresh={this.onRefresh.bind(this)}
-					refreshing={isRefreshing}
+					isRefreshing={isRefreshing}
 					isMoring={isMoring}
 					onEndReached={this.onEndReached.bind(this)}
 				/>

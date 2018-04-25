@@ -1,6 +1,7 @@
 import { getArticleList } from '../services/article';
 import { getHotwordList } from '@/services/search';
 import { NavigationActions } from 'react-navigation';
+import { delay } from '@/utils';
 
 export default {
 	namespace:'search',
@@ -80,21 +81,17 @@ export default {
 			}else{
 				yield put({type:'setState', payload:{isMoring:true}});
 				res = yield call(getArticleList, {keyword, pageIndex:pageIndex + 1, pageSize});
-				if(res.data.length>1){
+				if(res.data.length < pageSize || pageIndex * pageSize < total){
 					pageIndex = pageIndex + 1
 				}
 				articleList = articleList.concat(res.data);
 			}
 			total = res.total;
-			yield put({type:'setState', payload:{articleList, pageIndex, total, isMoring:false}});
-			setTimeout(()=>{
-				// global.app._store.dispatch({type:'search/setState', payload:{isRefreshing:false}});
-			}, 2000)
+			yield put({type:'setState', payload:{articleList, pageIndex, total, isMoring:false, isRefreshing:false}});
 		}
 	},
 	reducers:{
 		setState(state, action){
-
 			return {
 				...state, 
 				...action.payload

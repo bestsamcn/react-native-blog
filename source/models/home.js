@@ -32,15 +32,13 @@ export default {
 				pageIndex = 1;
 				articleList = res.data;
 				global.storage.save({key:'article', data:{articleList, total:res.total}});
-
 			}else{
 				yield put({type:'setState', payload:{isMoring:true}});
 				res = yield call(getArticleList, {pageIndex:pageIndex + 1, pageSize});
-				if(res.data.length>1){
+				if(res.data.length < pageSize || pageIndex * pageSize < total){
 					pageIndex = pageIndex + 1
 				}
 				articleList = articleList.concat(res.data);
-
 			}
 			total = res.total;
 			yield put({type:'setState', payload:{articleList, pageIndex, total, isRefreshing:false, isMoring:false}});

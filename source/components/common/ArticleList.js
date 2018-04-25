@@ -58,16 +58,19 @@ class ArticleList extends React.Component{
 	//渲染底部
 	renderFooter(){
 		let { isMoring, pageIndex, pageSize, total, isRefreshing } = this.props;
-		if(pageIndex * pageSize < total){
-			return <View style={[{width:'100%', height:40}, flex.center]}>
-				<Loading />
-				<Text style={{textAlign:'center', color:'#1abc9c', marginLeft:5}}>正在加载...</Text>
-			</View>
-		}else{
-			return <View style={[{width:'100%', height:40}, flex.center]}>
-				<Text style={{textAlign:'center', color:'#333'}}>没有更多了</Text>
-			</View>
+		if(!isRefreshing){
+			if(pageIndex * pageSize < total){
+				return <View style={[{width:'100%', height:40}, flex.center]}>
+					<Loading />
+					<Text style={{textAlign:'center', color:'#1abc9c', marginLeft:5}}>正在加载...</Text>
+				</View>
+			}else{
+				return <View style={[{width:'100%', height:40}, flex.center]}>
+					<Text style={{textAlign:'center', color:'#333'}}>没有更多了</Text>
+				</View>
+			}
 		}
+
 	}
 	//导航
 	navigate(article){
@@ -126,10 +129,8 @@ class ArticleList extends React.Component{
 	render(){
 		let { articleList, isRefreshing, pageSize, onEndReachedThreshold } = this.props;
 		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-		console.log(isRefreshing, 'fffffffffffffff')
 		return(
 			<View style={{width:'100%', height:'100%'}}>
-				<Spinner cancelable={true} size="small" color="#1abc9c" overlayColor="rgba(0, 0, 0, 0.0)" visible={isRefreshing} />
 				<ListView 
 					pageSize={pageSize} 
 					enableEmptySections

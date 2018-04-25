@@ -61,8 +61,6 @@ class Home extends React.Component{
 		let { articleList, isRefreshing, isMoring, total, pageIndex } = this.props.home;
 		let { isLoading } = this.props.global;
 		let { navigation } = this.props;
-		console.log(isRefreshing, 'ffffffff')
-
 		return(
 			<View style={[container.view___]}>
 				<ArticleList 
@@ -72,7 +70,7 @@ class Home extends React.Component{
 					onScroll={this.onScroll.bind(this)} 
 					articleList={articleList} 
 					onRefresh={this.onRefresh.bind(this)}
-					refreshing={isRefreshing}
+					isRefreshing={isRefreshing}
 					isMoring={isMoring}
 					onEndReached={this.onEndReached.bind(this)}
 				/>
