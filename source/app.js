@@ -8,6 +8,7 @@ import Router, { routerMiddleware } from './router';
 import sync from './config/storage';
 import _models from './models';
 
+console.log('fffffffffffffffff')
 global.storage = new Storage({
 	size: 1000,
 	storageBackend: AsyncStorage,
