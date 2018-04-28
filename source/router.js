@@ -5,6 +5,7 @@ import { initializeListeners, createReduxBoundAddListener, createReactNavigation
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { About, Message, Splash } from '@/views';
 import HomeStack from '@/views/home';
+import MessageStack from '@/views/message';
 import { SearchResult, SearchIndex } from './views/search';
 import WebScreen from '@/views/Webview';
 import SplashScreen from 'react-native-splash-screen';
@@ -32,7 +33,7 @@ const TabNavigation = TabNavigator(
 			}
 		},
 		MessageTab:{
-			screen: Message,
+			screen: MessageStack,
 			navigationOptions:{
 				title:'留言',
 				tabBarIcon:({focused, tintColor})=>(
@@ -42,6 +43,7 @@ const TabNavigation = TabNavigator(
 		}
 	},
 	{
+		initialRouteName:'MessageTab',
 		animationEnabled: false,
 		swipeEnabled:false,
 		tabBarPosition:'bottom',
