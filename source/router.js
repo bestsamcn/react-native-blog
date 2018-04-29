@@ -39,6 +39,7 @@ const TabNavigation = TabNavigator(
 				tabBarIcon:({focused, tintColor})=>(
 					<Icon name="bold" size={20} color={focused ? "#1abc9c" : "#999"} />
 				)
+				
 			}
 		}
 	},
