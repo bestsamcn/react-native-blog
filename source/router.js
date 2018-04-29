@@ -44,7 +44,7 @@ const TabNavigation = TabNavigator(
 		}
 	},
 	{
-		initialRouteName:'MessageTab',
+		initialRouteName:'HomeTab',
 		animationEnabled: false,
 		swipeEnabled:false,
 		tabBarPosition:'bottom',
