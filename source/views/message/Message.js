@@ -37,6 +37,17 @@ class Message extends React.Component{
 	onStartShouldSetResponder(){
 		Keyboard.dismiss();
 	}
+	componentWillUnmount () {
+	    this.keyboardDidHideListener.remove();
+	}
+	_keyboardDidHide(){
+		this.setState({
+			marginBottom:0
+		})
+	}
+	componentWillMount () {
+	    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
+	}
 	componentDidMount(){
 		this.props.navigation.onHeaderRightClick = this.onHeaderRightClick.bind(this);
 	}
@@ -68,8 +79,8 @@ class Message extends React.Component{
 	}
 	render(){
 		let { name, email, content, marginBottom } = this.state;
-		console.log(marginBottom, 'fffffffffffff')
 		let { isLoading } = this.props.message;
+		let { keybordHeight } = this.props.global;
 		return(
 			<KeyboardAvoidingView behavior="padding" style={[container.view__, padding.a20, {position:'relative', bottom:marginBottom}]} onStartShouldSetResponder={this.onStartShouldSetResponder.bind(this)}>
 				{isLoading && <FullLoading />}
@@ -110,7 +121,7 @@ class Message extends React.Component{
 					underlayColor="#1abc9c" 
 					activeOpacity={0.5} 
 					onPress={this.onPostMesssage.bind(this)}
-					style={[margin.top20, {width:'100%', height:40}]}
+					style={[margin.top20, {width:'100%', height:40, marginBottom:keybordHeight}]}
 				>
 					<View style={[flex.center, {width:'100%', height:40, backgroundColor:'#1abc9c'}]}>
 						<Text style={{width:'100%', textAlign:'center', color:'#fff'}}>提交</Text>

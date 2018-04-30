@@ -5,7 +5,9 @@ export default {
 	namespace:'global',
 	state:{
 		token:'',
-		isLoading:false
+		isLoading:false,
+		keybordHeight:0,
+		isKeybordVisible:false
 	},
 	subscriptions:{
 

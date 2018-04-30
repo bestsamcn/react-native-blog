@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, NetInfo, ToastAndroid, BackHandler } from 'react-native';
-import { StackNavigator, TabNavigator, addNavigationHelpers, NavigationActions } from 'react-navigation';
+import { StackNavigator, TabNavigator, addNavigationHelpers, NavigationActions, TabBarBottom } from 'react-navigation';
 import { initializeListeners, createReduxBoundAddListener, createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { About, Message, Splash } from '@/views';
@@ -11,6 +11,8 @@ import WebScreen from '@/views/Webview';
 import SplashScreen from 'react-native-splash-screen';
 import { delay } from '@/utils';
 import { connect } from 'dva/mobile';
+import { TabBarComponent } from '@/components/common';
+
 const TabNavigation = TabNavigator(
 	{
 		HomeTab:{
@@ -44,7 +46,8 @@ const TabNavigation = TabNavigator(
 		}
 	},
 	{
-		initialRouteName:'HomeTab',
+		initialRouteName:'MessageTab',
+		tabBarComponent:TabBarComponent,
 		animationEnabled: false,
 		swipeEnabled:false,
 		tabBarPosition:'bottom',
