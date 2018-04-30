@@ -55,7 +55,6 @@ class Result extends React.Component{
 	
 	render(){
 		let { articleList, isRefreshing, isMoring, total, pageIndex } = this.props.search;
-		console.log(isRefreshing, 'result render')
 		let { isLoading } = this.props.global;
 		let { navigation } = this.props;
 		return(

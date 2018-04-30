@@ -15,7 +15,7 @@ export default {
 		async setup({dispatch}){
 			try{
 				let { articleList, total } = await global.storage.load({key:'article'});
-				!!articleList && !!articleList.length && dispatch({type:'setState', payload:{pageIndex:1, total, articleList}});
+				!!articleList && !!articleList.length && dispatch({type:'setState', payload:{pageIndex:1, total, articleList, isRefreshing:false}});
 			}catch(e){
 				console.log(e)
 			}

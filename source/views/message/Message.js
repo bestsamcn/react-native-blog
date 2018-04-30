@@ -83,7 +83,7 @@ class Message extends React.Component{
 		let { keybordHeight } = this.props.global;
 		return(
 			<KeyboardAvoidingView behavior="padding" style={[container.view__, padding.a20, {position:'relative', bottom:marginBottom}]} onStartShouldSetResponder={this.onStartShouldSetResponder.bind(this)}>
-				{isLoading && <FullLoading type='30'/>}
+				{isLoading && <FullLoading type='30' opacity={0.5}/>}
 				<View style={[margin.top20]} >
 					<Text>Name</Text>
 					<TextInput 

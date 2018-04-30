@@ -4,7 +4,7 @@ import AboutScreen from './About';
 
 const AboutStack = StackNavigator(
 	{
-		Message:{
+		About:{
 			screen:AboutScreen,
 			navigationOptions:{
 				header:null
@@ -12,7 +12,7 @@ const AboutStack = StackNavigator(
 		}
 	},
 	{
-		initialRouteName:'Message',
+		initialRouteName:'About',
 	}
 )
 

@@ -141,7 +141,7 @@ class Router extends React.Component{
     onBackHandler(){
     	const currentScreen = this.getCurrentScreen(this.props.router);
 
-	    if (currentScreen !== 'Home' && currentScreen !== 'AboutTab' && currentScreen!== 'MessageTab') {
+	    if (currentScreen !== 'Home' && currentScreen !== 'About' && currentScreen!== 'Message') {
 	      	this.props.dispatch(NavigationActions.back())
 	      	return true
 	    }
