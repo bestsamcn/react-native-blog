@@ -1,6 +1,6 @@
 import React from 'react';
 import { StackNavigator, navigate } from 'react-navigation';
-import { Button, View, Text, TextInput, KeyboardAvoidingView, Keyboard, TouchableHighlight, AndroidToast, Dimensions } from 'react-native';
+import { Button, View, Text, TextInput, KeyboardAvoidingView, Keyboard, TouchableHighlight, ToastAndroid, Dimensions } from 'react-native';
 import { connect } from 'dva/mobile';
 import { FullLoading } from '@/components/common';
 import { HomeHeader } from '@/components/layout/headers';
@@ -55,7 +55,7 @@ class Message extends React.Component{
 	onPostMesssage(){
 		let { name, email, content } = this.state;
 		if(!name || !email || !content){
-			return AndroidToast.show('请填写完整信息', 1000);
+			return ToastAndroid.show('请填写完整信息', 1000);
 		}
 		this.props.dispatch({type:'message/addMessage', params:{...this.state, callback:()=>{
 			this.setState({name:'', email:'', content:''});

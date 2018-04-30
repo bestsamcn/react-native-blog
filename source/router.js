@@ -47,7 +47,7 @@ const TabNavigation = TabNavigator(
 		}
 	},
 	{
-		initialRouteName:'AboutTab',
+		initialRouteName:'HomeTab',
 		tabBarComponent:TabBarComponent,
 		animationEnabled: false,
 		swipeEnabled:false,

@@ -4,6 +4,8 @@ import { navigate } from 'react-navigation';
 import { connect } from 'dva/mobile';
 import { FullLoading, Tabbar } from '@/components/common';
 import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
+import History from './History';
+import Information from './Information';
 
 @connect(state=>({...state}))
 class About extends React.Component{
@@ -18,13 +20,12 @@ class About extends React.Component{
 			<ScrollableTabView
 				tabBarUnderlineStyle={{marginBottom:-1, backgroundColor:'#1abc9c', borderRadius:4}}
 				tabBarActiveTextColor="#1abc9c"
-				tabBarTextStyle={{}}
 			    style={{}}
-			    initialPage={1}
+			    initialPage={0}
 			    renderTabBar={() => <DefaultTabBar />}
 			 >
-		    	<Text tabLabel='History'>History</Text>
-		    	<Text tabLabel='Infomation'>Infomation</Text>
+		    	<View  style={{padding:10}} tabLabel='History'><History /></View>
+		    	<View tabLabel='Infomation' style={{paddingVertical:10, backgroundColor:'#f6f6f6'}}><Information /></View>
 		  </ScrollableTabView>
 		)
 	}

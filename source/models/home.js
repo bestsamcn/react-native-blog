@@ -9,7 +9,7 @@ export default {
 		pageSize:10,
 		total:11,
 		isMoring:false,
-		isRefreshing:false
+		isRefreshing:true
 	},
 	subscriptions:{
 		async setup({dispatch}){
