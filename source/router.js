@@ -3,9 +3,10 @@ import { View, NetInfo, ToastAndroid, BackHandler } from 'react-native';
 import { StackNavigator, TabNavigator, addNavigationHelpers, NavigationActions, TabBarBottom } from 'react-navigation';
 import { initializeListeners, createReduxBoundAddListener, createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { About, Message, Splash } from '@/views';
+import { Splash } from '@/views';
 import HomeStack from '@/views/home';
 import MessageStack from '@/views/message';
+import AboutStack from '@/views/about';
 import { SearchResult, SearchIndex } from './views/search';
 import WebScreen from '@/views/Webview';
 import SplashScreen from 'react-native-splash-screen';
@@ -26,7 +27,7 @@ const TabNavigation = TabNavigator(
 			}
 		},
 		AboutTab:{
-			screen: About,
+			screen: AboutStack,
 			navigationOptions:{
 				title:'关于',
 				tabBarIcon:({focused, tintColor})=>(
@@ -46,7 +47,7 @@ const TabNavigation = TabNavigator(
 		}
 	},
 	{
-		initialRouteName:'MessageTab',
+		initialRouteName:'AboutTab',
 		tabBarComponent:TabBarComponent,
 		animationEnabled: false,
 		swipeEnabled:false,

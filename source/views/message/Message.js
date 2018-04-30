@@ -1,6 +1,6 @@
 import React from 'react';
 import { StackNavigator, navigate } from 'react-navigation';
-import { Button, View, Text, TextInput, KeyboardAvoidingView, Keyboard, TouchableHighlight } from 'react-native';
+import { Button, View, Text, TextInput, KeyboardAvoidingView, Keyboard, TouchableHighlight, AndroidToast, Dimensions } from 'react-native';
 import { connect } from 'dva/mobile';
 import { FullLoading } from '@/components/common';
 import { HomeHeader } from '@/components/layout/headers';
@@ -83,7 +83,7 @@ class Message extends React.Component{
 		let { keybordHeight } = this.props.global;
 		return(
 			<KeyboardAvoidingView behavior="padding" style={[container.view__, padding.a20, {position:'relative', bottom:marginBottom}]} onStartShouldSetResponder={this.onStartShouldSetResponder.bind(this)}>
-				{isLoading && <FullLoading />}
+				{isLoading && <FullLoading type='30'/>}
 				<View style={[margin.top20]} >
 					<Text>Name</Text>
 					<TextInput 

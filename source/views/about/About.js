@@ -1,8 +1,10 @@
 import React from 'react';
 import { Button, View, Text } from 'react-native';
 import { navigate } from 'react-navigation';
+import { connect } from 'dva/mobile';
+import { FullLoading } from '@/components/common';
 
-
+@connect(state=>({...state}))
 class About extends React.Component{
 	constructor(props){
 		super(props);
@@ -13,8 +15,7 @@ class About extends React.Component{
 	render(){
 		return(
 			<View>
-				<Text>Hello About</Text>
-				<Button title="Home" onPress={this.goBack.bind(this)}/>
+				<FullLoading type='20'/>
 			</View>		
 		)
 	}
