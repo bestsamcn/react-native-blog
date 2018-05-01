@@ -146,6 +146,7 @@ class Router extends React.Component{
 	      	return true
 	    }
 	    if(this.lastBackPressTime && (Date.now() - this.lastBackPressTime < 2000)){
+	    	// global.app.unmodel('@@dva')
     		return false;
     	}
     	this.lastBackPressTime = Date.now() ;
