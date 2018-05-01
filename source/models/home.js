@@ -9,7 +9,9 @@ export default {
 		pageSize:10,
 		total:11,
 		isMoring:false,
-		isRefreshing:true
+		isRefreshing:true,
+		currentTabIndex:0,
+		tabList:[{category:'', articleList:[], pageIndex:1, total:11, isRefreshing:true, isMoring:false}]
 	},
 	subscriptions:{
 		async setup({dispatch}){
@@ -42,6 +44,41 @@ export default {
 			}
 			total = res.total;
 			yield put({type:'setState', payload:{articleList, pageIndex, total, isRefreshing:false, isMoring:false}});
+		},
+		//获取tab文章
+		getTabArticleList({ params }, { call, put, select }){
+			let { currentTabIndex, tabList } = yield select(state=>state.home);
+			let currentCategoryArticle = tabList[currentTabIndex];
+			let { isRefresh, currentTabIndex } = params;
+			if(!!isRefresh){
+
+				//状态
+				currentCategoryArticle.isRefreshing = true;
+				tabList.splice(currentTabIndex, 1, currentCategoryArticle);
+				yield put({type:'setState', payload:{currentTabIndex, tabList}});
+
+				//请求
+				currentCategoryArticle.pageIndex = 1;
+				let { data } = yield call(getArticleList, {...currentCategoryArticle})
+				currentCategoryArticle.articleList = data;
+				currentCategoryArticle.isRefreshing = false;
+				tabList.splice(currentTabIndex, 1, currentCategoryArticle);
+				yield put({type:'setState', payload:{tabList}});
+			}else{
+
+				//状态
+				currentCategoryArticle.isMoring = true;
+				tabList.splice(currentTabIndex, 1, currentCategoryArticle);
+				yield put({type:'setState', payload:{currentTabIndex, tabList}});
+
+				//请求
+				currentCategoryArticle.pageIndex = currentCategoryArticle.pageIndex + 1;
+				let { data } = yield call(getArticleList, {...currentCategoryArticle})
+				currentCategoryArticle.articleList = currentCategoryArticle.articleList.concat(data);
+				currentCategoryArticle.isRefreshing = false;
+				tabList.splice(currentTabIndex, 1, currentCategoryArticle);
+				yield put({type:'setState', payload:{tabList}});
+			}
 		}
 	},
 	reducers:{
