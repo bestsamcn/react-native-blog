@@ -38,7 +38,6 @@ export default {
 	},
 	reducers:{
 		setState(state, action){
-			console.log(action.payload, 'fffffffffff')
 			return{
 				...state,
 				...action.payload

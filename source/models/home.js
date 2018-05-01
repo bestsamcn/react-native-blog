@@ -46,10 +46,11 @@ export default {
 			yield put({type:'setState', payload:{articleList, pageIndex, total, isRefreshing:false, isMoring:false}});
 		},
 		//获取tab文章
-		getTabArticleList({ params }, { call, put, select }){
-			let { currentTabIndex, tabList } = yield select(state=>state.home);
+		* getTabArticleList({ params }, { call, put, select }){
+			let { tabList, currentTabIndex } = yield select(state=>state.home);
 			let currentCategoryArticle = tabList[currentTabIndex];
-			let { isRefresh, currentTabIndex } = params;
+			currentTabIndex = params.currentTabIndex || currentTabIndex;
+			let { isRefresh } = params;
 			if(!!isRefresh){
 
 				//状态
