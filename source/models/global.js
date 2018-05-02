@@ -12,16 +12,7 @@ export default {
 	},
 	subscriptions:{
 		async setup({dispatch}){
-			try{
-				let { categoryList } = await global.storage.load({key:'categoryList'});
-				if(!!categoryList && !!categoryList.length && categoryList.length !=0){
-					dispatch({type:'setState', payload:{categoryList}});
-				}else{
-					dispatch({type:'getCategoryList', params:{}});
-				}
-			}catch(e){
-				// console.log && console.log(e)
-			}
+			dispatch({type:'getCategoryList', params:{}});
 		}
 	},
 	effects:{
@@ -31,8 +22,22 @@ export default {
 		//获取分类
 		* getCategoryList({params}, { put, call, select }){
 			let { data } = yield call(getCategoryList, {});
+			let tabList = [];
+			data.map(item=>{
+				let _item = {};
+				_item.category = item.name;
+				_item.name = item.name;
+				_item.pageIndex = 1;
+				_item.total = 11;
+				_item.isRefreshing = true;
+				_item.isMoring = false;
+				_item.articleList = [];
+				tabList.push(_item);
+			});
+			tabList.unshift({category:'全部', name:'', articleList:[], pageIndex:1, total:11, isRefreshing:true, isMoring:false});
+			yield put({type:'home/setState', payload:{tabList}});
 			global.storage.save({key:'categoryList', data:{categoryList:data}});
-			yield put({type:'setState', payload:{categoryList}})
+			yield put({type:'setState', payload:{categoryList:data}})
 		}
 
 	},
