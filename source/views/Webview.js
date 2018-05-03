@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { WebView, View, Dimensions, Text, TouchableHighlight, KeyboardAvoidingView } from 'react-native';
-import { Loading  } from '@/components/common';
+import { FullLoading  } from '@/components/common';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { color, font, bg, flex, container } from '@/styles/base';
 import { WebHeader } from '@/components/layout/headers';
@@ -48,27 +48,13 @@ class Webview extends Component{
 		this.setState({isLoading:true});
 	}
 	onLoadEnd(){
-		this.timer = setTimeout(()=>{
-			this.setState({isLoading:false});
-		},500)
-		
+		this.setState({isLoading:false});
 	}
-	componentWillMount(){
-		this.timer && clearTimeout(this.timer);
-	}
-	renderLoading(){
-	    if(this.state.isLoading){
-	      	return (
-	      		<View style={[container.view_, flex.center, bg.white, {position:'absolute', left:0, top:0}]}><Loading /></View>
-	      	);
-	    }
-	 }
 	render(){
-		
 		return(
 			<KeyboardAvoidingView style={[container.view_, bg.white]} behavior="padding">
 				{this.renderWebview()}
-				{this.state.isLoading && this.renderLoading()}
+				{this.state.isLoading && <FullLoading type="20" opacity={1}/>}
 			</KeyboardAvoidingView>
 		)
 	}

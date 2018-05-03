@@ -16,6 +16,7 @@
     "react-dom": "^16.3.0",
     "react-native": "^0.54.2",
     "react-native-loading-spinner-overlay": "^0.5.2",
+    "react-native-scrollable-tab-view": "^0.8.0",
     "react-native-splash-screen": "^3.0.6",
     "react-native-storage": "^0.2.2",
     "react-native-vector-icons": "^4.6.0",

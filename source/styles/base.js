@@ -101,6 +101,9 @@ export const padding = StyleSheet.create({
 	a10:{
 		padding:10
 	},
+	a20:{
+		padding:20
+	},
 	h5:{
 		paddingHorizontal:5
 	},

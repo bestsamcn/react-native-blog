@@ -54,6 +54,7 @@ class Home extends React.Component{
 			let { articleList, total } = await global.storage.load({key:'article'});
 			(!articleList || !articleList.length || articleList.length == 0) && this.props.dispatch({type:'home/getArticleList', params:{isRefresh:true}});
 		}catch(e){
+			// console.log(e)
 		}
 		
 	}

@@ -34,7 +34,11 @@ react-native run-android
 - [请点击我](http://angular.bestsamcn.me/)预览angular版本
 - [请点击我](http://gulp.bestsamcn.me/)预览gulp自动化版本
 
-
+## 问题
+- 首页滑动切换有问题，怀疑是分类数据延迟导致无法正常计算尺寸的问题；
+- 文章详情点赞功能， 某些样式有问题；
+- app.model should be unique 导致闪退；
+- 关于页面，信息webview高度不对；更新组件未完成
 
 ## 后续
 给个星星呗...
