@@ -18,7 +18,8 @@ class Home extends React.Component{
 		super(props);
 		this.state = {
 			loading:false,
-			loadMore:false
+			loadMore:false,
+			isVisibleTabView:false
 		}
 	}
 	onRefresh(currentTabIndex){
@@ -44,6 +45,9 @@ class Home extends React.Component{
 	}
 	componentDidMount(){
 		this.props.navigation.onHeaderRightClick = this.onHeaderRightClick.bind(this);
+		this.timer = setTimeout(()=>{
+			this.setState({isVisibleTabView:true});
+		}, 500);
 	}
 	onEndReached(currentTabIndex){
 		let { tabList } = this.props.home;
@@ -60,6 +64,10 @@ class Home extends React.Component{
 		if(tabList[currentTabIndex].isMoring || tabList[currentTabIndex].isRefreshing) return;
 		this.props.dispatch({type:'home/getTabArticleList', params:{isRefresh:true, currentTabIndex}});
 	}
+	componentWillUnmount(){
+		console.log('unmount')
+		this.timer && clearTimeout(this.timer);
+	}
 	render(){
 		let { currentTabIndex, tabList } = this.props.home;
 		let { isLoading } = this.props.global;
@@ -73,7 +81,7 @@ class Home extends React.Component{
 			    onChangeTab={this.onChangeTab.bind(this)}
 			    renderTabBar={() => <ScrollableTabBar  />}
 			 >
-			 	{tabList.map((item, index)=>(
+			 	{!!tabList.length && tabList.map((item, index)=>(
 		    		<View key={index} tabLabel={item.category}>
 		    			<ArticleList 
 							navigation={navigation}

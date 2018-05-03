@@ -11,7 +11,7 @@ export default {
 		isMoring:false,
 		isRefreshing:true,
 		currentTabIndex:0,
-		tabList:[{category:'全部', name:'', articleList:[], pageIndex:1, total:11, isRefreshing:true, isMoring:false}]
+		tabList:[]
 	},
 	subscriptions:{
 		async setup({dispatch}){

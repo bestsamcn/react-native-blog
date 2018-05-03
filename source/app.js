@@ -8,7 +8,6 @@ import Router, { routerMiddleware } from './router';
 import sync from './config/storage';
 import _models from './models';
 
-console.log('fffffffffffffffsadfasdfasdfff')
 global.storage = new Storage({
 	size: 1000,
 	storageBackend: AsyncStorage,
@@ -25,7 +24,7 @@ global.app = dva({
 });
 
 _models(global.app);
-global.app.router(() => < Router / > )
+global.app.router(()=><Router/ >);
 
 export default () => {
 	return global.app.start();

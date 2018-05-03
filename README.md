@@ -35,7 +35,34 @@ react-native run-android
 - [请点击我](http://gulp.bestsamcn.me/)预览gulp自动化版本
 
 ## 问题
-- 首页滑动切换有问题，怀疑是分类数据延迟导致无法正常计算尺寸的问题；
+- 首页滑动切换有问题，怀疑是分类数据延迟导致无法正常计算尺寸的问题, 通过设置条件渲染即可:
+	```
+	<ScrollableTabView
+		tabBarUnderlineStyle={{marginBottom:-1, zIndex:1000, backgroundColor:'#1abc9c', borderRadius:4}}
+		tabBarActiveTextColor="#1abc9c"
+	    style={{backgroundColor:'#fff'}}
+	    initialPage={currentTabIndex}
+	    onChangeTab={this.onChangeTab.bind(this)}
+	    renderTabBar={() => <ScrollableTabBar  />}
+	>
+	 	{!!tabList.length && tabList.map((item, index)=>(
+    		<View key={index} tabLabel={item.category}>
+    			<ArticleList 
+					navigation={navigation}
+					total={item.total}
+					pageIndex={item.pageIndex}
+					onScroll={this.onScroll.bind(this)} 
+					articleList={item.articleList} 
+					onRefresh={this.onRefresh.bind(this, index)}
+					isRefreshing={item.isRefreshing}
+					isMoring={item.isMoring}
+					onEndReached={this.onEndReached.bind(this, index)}
+				/>
+    		</View>
+	 	))}
+    	
+  	</ScrollableTabView>	
+	```
 - 文章详情点赞功能， 某些样式有问题；
 - app.model should be unique 导致闪退；
 - 关于页面，信息webview高度不对；更新组件未完成
