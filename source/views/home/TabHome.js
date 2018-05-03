@@ -22,9 +22,10 @@ class Home extends React.Component{
 			isVisibleTabView:false
 		}
 	}
+	//刷新
 	onRefresh(currentTabIndex){
 		let { tabList } = this.props.home;
-		if(tabList[currentTabIndex].isMoring || tabList[currentTabIndex].isRefreshing) return;
+		if(!tabList.length || (tabList[currentTabIndex].isMoring || tabList[currentTabIndex].isRefreshing)) return;
 		this.props.dispatch({type:'home/getTabArticleList', params:{isRefresh:true, currentTabIndex}});
 	}
 	onScroll(scrollView){
@@ -37,6 +38,7 @@ class Home extends React.Component{
 			this.setState({loadMore:false});
 		}
 	}
+	//搜索
 	onHeaderRightClick(){
 		let { hotwordList } = this.props.search;
 		let name = !!hotwordList && !!hotwordList[0] && hotwordList[0].name || HOT_WORD;
@@ -49,20 +51,20 @@ class Home extends React.Component{
 			this.setState({isVisibleTabView:true});
 		}, 500);
 	}
+	//加载
 	onEndReached(currentTabIndex){
 		let { tabList } = this.props.home;
 		if(tabList[currentTabIndex].isMoring || tabList[currentTabIndex].isRefreshing) return;
 		this.props.dispatch({type:'home/getTabArticleList', params:{currentTabIndex}});
 	}
+	//滑动
 	onChangeTab(tab){
 		let { i } = tab;
 		let { tabList } = this.props.home;
 		!!tabList.length && !tabList[i].articleList.length && this.props.dispatch({type:'home/getTabArticleList', params:{isRefresh:true, currentTabIndex:i}})
 	}
 	async componentWillMount(){
-		let { tabList } = this.props.home;
-		if(tabList.length && (tabList[0].isMoring || tabList[0].isRefreshing)) return;
-		this.props.dispatch({type:'home/getTabArticleList', params:{isRefresh:true, currentTabIndex:0}});
+		this.onRefresh(0);
 	}
 	componentWillUnmount(){
 		this.timer && clearTimeout(this.timer);
@@ -72,7 +74,6 @@ class Home extends React.Component{
 		let { isLoading } = this.props.global;
 		let { navigation } = this.props;
 		let { isVisibleTabView } = this.state;
-		console.log(tabList.length)
 		return(
 			<ScrollableTabView
 				tabBarUnderlineStyle={{marginBottom:-1, zIndex:1000, backgroundColor:'#1abc9c', borderRadius:4}}

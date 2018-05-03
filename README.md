@@ -63,9 +63,7 @@ react-native run-android
     	
   	</ScrollableTabView>	
 	```
-- 文章详情点赞功能， 某些样式有问题；
 - app.model should be unique 导致闪退；
-- 关于页面，信息webview高度不对；更新组件未完成
 
 ## 后续
 给个星星呗...

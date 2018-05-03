@@ -24,6 +24,7 @@ global.app = dva({
 });
 
 _models(global.app);
+
 global.app.router(()=><Router/ >);
 
 export default () => {

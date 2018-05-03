@@ -23,7 +23,8 @@ class Webview extends Component{
 	}
 	renderWebview(){
 		let { id } = this.props.navigation.state.params;
-		let baseUrl = 'file:///android_asset/web/index.html#/app/article/';
+		// let baseUrl = 'http://10.0.1.110:8080/article/detail/';
+		let baseUrl = 'file:///android_asset/web/index.html#/article/detail/';
 		return (
 			<WebView
 	          	onLoadStart={this.onLoadStart.bind(this)}

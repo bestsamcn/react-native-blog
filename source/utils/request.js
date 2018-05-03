@@ -20,7 +20,6 @@ export default async function request(url, options={}) {
     return new Promise((resolve, reject)=>{
         options.headers = {};
         options.params = options.params || {};
-        console.log(options.params)
         options.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
         // options.headers['x-access-token'] = '';
         if(options.method != 'post'){

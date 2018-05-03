@@ -90,6 +90,7 @@ class Message extends React.Component{
 						style={{height:40, padding:10, marginTop:10, width:'100%', backgroundColor:'#eee', borderWidth:1, borderColor:'#1abc9c'}}
 						underlineColorAndroid='transparent'
 						value={name}
+						placeholder="你的大名"
 						onChangeText ={this.setInputValue.bind(this, 'name')}
 					/>	
 				</View>
@@ -97,6 +98,7 @@ class Message extends React.Component{
 					<Text>Email</Text>
 					<TextInput 
 						value={email}
+						placeholder="你的邮箱"
 						style={{height:40, padding:10, marginTop:10, width:'100%', backgroundColor:'#eee', borderWidth:1, borderColor:'#1abc9c'}}
 						underlineColorAndroid='transparent'
 						onChangeText ={this.setInputValue.bind(this, 'email')}
@@ -109,10 +111,11 @@ class Message extends React.Component{
 							onChangeText ={this.setInputValue.bind(this, 'content')}
 							value={content}
 							multiline={true}
+							placeholder="说点什么"
 							onFocus={this.onTextInputFocus.bind(this)}
 							onBlur={this.onTextInputonBlur.bind(this)}
 							numberOfLines={4}
-							style={{height:40, marginTop:10, width:'100%', backgroundColor:'#eee', borderWidth:1, borderColor:'#1abc9c'}}
+							style={{height:40, marginTop:10, padding:10, width:'100%', backgroundColor:'#eee', borderWidth:1, borderColor:'#1abc9c'}}
 							underlineColorAndroid='transparent'
 						/>	
 					</KeyboardAvoidingView>

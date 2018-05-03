@@ -67,7 +67,7 @@ export default {
 				currentCategoryArticle.articleList = res.data;
 				currentCategoryArticle.isRefreshing = false;
 				currentCategoryArticle.total = res.total;
-				yield put({type:'setState', payload:{tabList:_tabList}});
+				yield put({type:'setState', payload:{currentTabIndex, tabList:_tabList}});
 			}else{
 
 				//状态
@@ -82,7 +82,7 @@ export default {
 				currentCategoryArticle.isMoring = false;
 				currentCategoryArticle.total = res.total;
 				_tabList.splice(currentTabIndex, 1, currentCategoryArticle);
-				yield put({type:'setState', payload:{tabList:_tabList}});
+				yield put({type:'setState', payload:{currentTabIndex, tabList:_tabList}});
 			}
 		}
 	},

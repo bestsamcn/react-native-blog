@@ -1,6 +1,8 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
 import AboutScreen from './About';
+import InformationScreen from './Information';
+
 
 const AboutStack = StackNavigator(
 	{
@@ -9,10 +11,13 @@ const AboutStack = StackNavigator(
 			navigationOptions:{
 				header:null
 			}
+		},
+		Info:{
+			screen:InformationScreen
 		}
 	},
 	{
-		initialRouteName:'About',
+		initialRouteName:'Info',
 	}
 )
 

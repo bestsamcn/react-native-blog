@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Text, WebView } from 'react-native';
+import { View, Text, WebView, ToastAndroid, Linking } from 'react-native';
 import { connect } from 'dva/mobile';
 import { FullLoading } from '@/components/common';
 import { container, bg } from '@/styles/base';
-
+import { HomeHeader } from '@/components/layout/headers';
 
 @connect(state=>({...state}))
 class Information extends React.Component{
+	static navigationOptions = HomeHeader;
 	constructor(props){
 		super(props);
 		this.state={
@@ -19,8 +20,33 @@ class Information extends React.Component{
 	onLoadEnd(){
 		this.setState({isLoading:false});
 	}
+	onHeaderRightClick(){
+		let { hotwordList } = this.props.search;
+		let name = !!hotwordList && !!hotwordList[0] && hotwordList[0].name || HOT_WORD;
+		this.props.navigation.navigate({routeName:'Search', params:{hotword:name}})
+
+	}
+	//注入脚本
+	injectJavaScript(){
+		return  `
+	    	var oLink = document.getElementById('github-link');
+	        oLink.onclick = function(event){
+	            window.postMessage(this.href);
+	            event.preventDefault();
+	        }
+		`
+	}
+	//接受网页消息
+	onMessage(e){
+		console.log(e)
+		Linking.openURL(e.nativeEvent.data).catch(err => ToastAndroid.show('出错了', 1000));
+	}
+	componentDidMount(){
+		this.props.navigation.onHeaderRightClick = this.onHeaderRightClick.bind(this);
+	}
 	render(){
-		let baseUrl = 'file:///android_asset/web/index.html#/app/information';
+		// let baseUrl = 'http://10.0.1.110:8080/about';
+		let baseUrl = 'file:///android_asset/web/index.html#/about';
 		return(
 			<View style={[container.view_]}>
 				{this.state.isLoading && <FullLoading type="20"/>}
@@ -36,10 +62,13 @@ class Information extends React.Component{
 		                console.log(e, 'renderError')
 		                return <View><Text>renderError回调了，出现错误</Text></View>
 		            }}
+
 		            domStorageEnabled={true}
 			        javaScriptEnabled={true}
 			        mixedContentMode="always"
 		         	scalesPageToFit={true}
+		         	onMessage={this.onMessage.bind(this)}
+		         	injectedJavaScript={this.injectJavaScript()}
 		    	/>
 			</View>
 		)
