@@ -65,6 +65,7 @@ react-native run-android
   	</ScrollableTabView>	
 	```
 - app.model should be unique 导致闪退；
+- 页签下划线不显示，是因为宽度为0的原因，以强制初始值为70
 
 ## 后续
 给个星星呗...

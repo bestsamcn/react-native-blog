@@ -12,6 +12,8 @@ export default {
 	},
 	subscriptions:{
 		async setup({dispatch}){
+			let { categoryList } = await global.storage.load({key:'categoryList'});
+			console.log(categoryList, 'storage, ;d')
 			// dispatch({type:'getCategoryList', params:{}});
 		}
 	},

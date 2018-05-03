@@ -3,13 +3,13 @@ import { navigate } from 'react-navigation';
 import { Button, View, Text, ListView, RefreshControl, TextInput, TouchableHighlight  } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'dva/mobile';
-import { Loading, ArticleList } from '@/components/common';
+import { Loading, ArticleList, ScrollTabBar } from '@/components/common';
 import { headerStyles } from '@/styles/home';
 import { HomeHeader } from '@/components/layout/headers';
 import { margin, color, font, flex, container } from '@/styles/base';
 import * as $$ from '@/utils';
 import { HOT_WORD } from '@/config';
-import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
 
 @connect(state=>({...state}))
 class Home extends React.Component{
@@ -81,7 +81,7 @@ class Home extends React.Component{
 			    style={{backgroundColor:'#fff'}}
 			    initialPage={currentTabIndex}
 			    onChangeTab={this.onChangeTab.bind(this)}
-			    renderTabBar={() => <ScrollableTabBar  />}
+			    renderTabBar={() => <ScrollTabBar />}
 			 >
 			 	{!!tabList.length && isVisibleTabView && tabList.map((item, index)=>(
 		    		<View key={index} tabLabel={item.category}>
