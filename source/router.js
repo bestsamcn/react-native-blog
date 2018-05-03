@@ -13,6 +13,7 @@ import SplashScreen from 'react-native-splash-screen';
 import { delay } from '@/utils';
 import { connect } from 'dva/mobile';
 import { TabBarComponent } from '@/components/common';
+import { getCategoryList } from '@/services/global';
 
 const TabNavigation = TabNavigator(
 	{
@@ -119,8 +120,12 @@ class Router extends React.Component{
 		super(props);
 	}
 	async componentDidMount() {
-        initializeListeners('root', this.props.router)
-        await delay(500);
+        initializeListeners('root', this.props.router);
+        
+		//初始化数据
+		let { data } = await getCategoryList();
+		this.props.dispatch({type:'global/getCategoryList', params:{data}});
+		await delay(500);
         await SplashScreen.hide();
     }
     componentWillMount(){

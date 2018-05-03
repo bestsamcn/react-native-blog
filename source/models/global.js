@@ -12,7 +12,7 @@ export default {
 	},
 	subscriptions:{
 		async setup({dispatch}){
-			dispatch({type:'getCategoryList', params:{}});
+			// dispatch({type:'getCategoryList', params:{}});
 		}
 	},
 	effects:{
@@ -21,7 +21,7 @@ export default {
 		},
 		//获取分类
 		* getCategoryList({params}, { put, call, select }){
-			let { data } = yield call(getCategoryList, {});
+			let { data=[] } = params;
 			let tabList = [];
 			data.map(item=>{
 				let _item = {};
@@ -37,7 +37,8 @@ export default {
 			tabList.unshift({category:'全部', name:'', articleList:[], pageIndex:1, total:11, isRefreshing:true, isMoring:false});
 			yield put({type:'home/setState', payload:{tabList}});
 			global.storage.save({key:'categoryList', data:{categoryList:data}});
-			yield put({type:'setState', payload:{categoryList:data}})
+			yield put({type:'setState', payload:{categoryList:data}});
+			params.callback && params.callback();
 		}
 
 	},

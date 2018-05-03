@@ -57,21 +57,22 @@ class Home extends React.Component{
 	onChangeTab(tab){
 		let { i } = tab;
 		let { tabList } = this.props.home;
-		!tabList[i].articleList.length && this.props.dispatch({type:'home/getTabArticleList', params:{isRefresh:true, currentTabIndex:i}})
+		!!tabList.length && !tabList[i].articleList.length && this.props.dispatch({type:'home/getTabArticleList', params:{isRefresh:true, currentTabIndex:i}})
 	}
 	async componentWillMount(){
-		let { tabList, currentTabIndex } = this.props.home;
-		if(tabList[currentTabIndex].isMoring || tabList[currentTabIndex].isRefreshing) return;
-		this.props.dispatch({type:'home/getTabArticleList', params:{isRefresh:true, currentTabIndex}});
+		let { tabList } = this.props.home;
+		if(tabList.length && (tabList[0].isMoring || tabList[0].isRefreshing)) return;
+		this.props.dispatch({type:'home/getTabArticleList', params:{isRefresh:true, currentTabIndex:0}});
 	}
 	componentWillUnmount(){
-		console.log('unmount')
 		this.timer && clearTimeout(this.timer);
 	}
 	render(){
 		let { currentTabIndex, tabList } = this.props.home;
 		let { isLoading } = this.props.global;
 		let { navigation } = this.props;
+		let { isVisibleTabView } = this.state;
+		console.log(tabList.length)
 		return(
 			<ScrollableTabView
 				tabBarUnderlineStyle={{marginBottom:-1, zIndex:1000, backgroundColor:'#1abc9c', borderRadius:4}}
@@ -81,7 +82,7 @@ class Home extends React.Component{
 			    onChangeTab={this.onChangeTab.bind(this)}
 			    renderTabBar={() => <ScrollableTabBar  />}
 			 >
-			 	{!!tabList.length && tabList.map((item, index)=>(
+			 	{!!tabList.length && isVisibleTabView && tabList.map((item, index)=>(
 		    		<View key={index} tabLabel={item.category}>
 		    			<ArticleList 
 							navigation={navigation}
@@ -96,8 +97,7 @@ class Home extends React.Component{
 						/>
 		    		</View>
 			 	))}
-		    	
-		  </ScrollableTabView>	
+		  	</ScrollableTabView>
 		)
 	}
 }

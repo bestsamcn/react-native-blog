@@ -48,6 +48,8 @@ export default {
 		//获取tab文章
 		* getTabArticleList({ params }, { call, put, select }){
 			let { tabList, currentTabIndex } = yield select(state=>state.home);
+			if(!tabList.length) return;
+
 			let _tabList = JSON.parse(JSON.stringify(tabList));
 			currentTabIndex = params.currentTabIndex || currentTabIndex;
 			let currentCategoryArticle = _tabList[currentTabIndex]
