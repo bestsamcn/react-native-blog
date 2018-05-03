@@ -35,6 +35,7 @@ react-native run-android
 - [请点击我](http://gulp.bestsamcn.me/)预览gulp自动化版本
 
 ## 问题
+- 如何获取stackNavigation 头部高度；
 - 首页滑动切换有问题，怀疑是分类数据延迟导致无法正常计算尺寸的问题, 通过设置条件渲染即可:
 	```
 	<ScrollableTabView
