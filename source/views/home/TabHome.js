@@ -1,6 +1,6 @@
 import React from 'react';
 import { navigate } from 'react-navigation';
-import { Button, View, Text, ListView, RefreshControl, TextInput, TouchableHighlight  } from 'react-native';
+import { Button, View, Text, ListView, RefreshControl, TextInput, TouchableHighlight, Animated, Easing  } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'dva/mobile';
 import { Loading, ArticleList, ScrollTabBar } from '@/components/common';
@@ -19,13 +19,23 @@ class Home extends React.Component{
 		this.state = {
 			loading:false,
 			loadMore:false,
-			isVisibleTabView:false
+			isVisibleTabView:false,
+			opacity0:new Animated.Value(0),
+			opacity1:new Animated.Value(0),
+			opacity2:new Animated.Value(0),
+			opacity3:new Animated.Value(0),
+			opacity4:new Animated.Value(0),
+			opacity5:new Animated.Value(0),
+			opacity6:new Animated.Value(0),
+			opacity7:new Animated.Value(0),
+			opacity8:new Animated.Value(0),
+			opacity9:new Animated.Value(0),
 		}
 	}
 	//刷新
 	onRefresh(currentTabIndex){
-		let { tabList } = this.props.home;
-		if(!tabList.length || (tabList[currentTabIndex].isMoring || tabList[currentTabIndex].isRefreshing)) return;
+		let { tabCategoryArticleList } = this.props.home;
+		if(!tabCategoryArticleList.length || (tabCategoryArticleList[currentTabIndex].isMoring || tabCategoryArticleList[currentTabIndex].isRefreshing)) return;
 		this.props.dispatch({type:'home/getTabArticleList', params:{isRefresh:true, currentTabIndex}});
 	}
 	onScroll(scrollView){
@@ -45,32 +55,66 @@ class Home extends React.Component{
 		this.props.navigation.navigate({routeName:'Search', params:{hotword:name}})
 
 	}
+	//获取头部高度，作为全局初始值
+	onHeaderLayout({ height }){
+		this.props.dispatch({type:'global/setState', payload:{headerHeight:height}});
+	}
 	componentDidMount(){
 		this.props.navigation.onHeaderRightClick = this.onHeaderRightClick.bind(this);
+		this.props.navigation.onHeaderLayout = this.onHeaderLayout.bind(this);
 		this.timer = setTimeout(()=>{
 			this.setState({isVisibleTabView:true});
 		}, 500);
 	}
 	//加载
 	onEndReached(currentTabIndex){
-		let { tabList } = this.props.home;
-		if(tabList[currentTabIndex].isMoring || tabList[currentTabIndex].isRefreshing) return;
+		let { tabCategoryArticleList } = this.props.home;
+		console.log(currentTabIndex, 'currentTabIndexcurrentTabIndex')
+		if(tabCategoryArticleList[currentTabIndex].isMoring || tabCategoryArticleList[currentTabIndex].isRefreshing) return;
 		this.props.dispatch({type:'home/getTabArticleList', params:{currentTabIndex}});
 	}
 	//滑动
 	onChangeTab(tab){
 		let { i } = tab;
-		let { tabList } = this.props.home;
-		!!tabList.length && !tabList[i].articleList.length && this.props.dispatch({type:'home/getTabArticleList', params:{isRefresh:true, currentTabIndex:i}})
+		let { tabCategoryArticleList } = this.props.home;
+		this.props.dispatch({type:'home/setState', payload:{currentTabIndex:i}});
+		!!tabCategoryArticleList.length && !tabCategoryArticleList[i].articleList.length && 
+		this.props.dispatch({type:'home/getTabArticleList', params:{isRefresh:true, currentTabIndex:i, callback(){
+			// Animated.timing(this.state['opacity'+i], {
+			// 	toValue:1,
+			// 	duration:300,
+			// 	easing:Easing.linear
+			// }).start();
+		}}});
 	}
 	async componentWillMount(){
-		this.onRefresh(0);
+		try{
+			let { tabCategoryArticleList } = await global.storage.load({key:'tabCategoryArticleList'});
+			(!tabCategoryArticleList || !tabCategoryArticleList.length || !tabCategoryArticleList[0].articleList.length ) && this.onRefresh(0);;
+		}catch(e){
+			this.onRefresh(0);
+		}
+		
+	}
+	componentWillReceiveProps(nextProps){
+		// if(this.props.home.tabCategoryArticleList.length != this.state.opacity.length){
+		// 	console.log(this.props.home.tabCategoryArticleList.length, this.state.opacity.length)
+		// 	this.state.opacity.length =0;
+		// 	this.props.home.tabCategoryArticleList.map((item, index)=>{
+		// 		this.state.opacity.push(index);
+		// 		let obj = {};
+		// 		obj['opacity'+index] = new Animated.Value(0)
+		// 		this.setState(obj)
+		// 	});
+		// 	console.log(this.state)
+		// 	this.setState(opacity);
+		// }
 	}
 	componentWillUnmount(){
 		this.timer && clearTimeout(this.timer);
 	}
 	render(){
-		let { currentTabIndex, tabList } = this.props.home;
+		let { currentTabIndex, tabCategoryArticleList } = this.props.home;
 		let { isLoading } = this.props.global;
 		let { navigation } = this.props;
 		let { isVisibleTabView } = this.state;
@@ -83,8 +127,8 @@ class Home extends React.Component{
 			    onChangeTab={this.onChangeTab.bind(this)}
 			    renderTabBar={() => <ScrollTabBar />}
 			 >
-			 	{!!tabList.length && isVisibleTabView && tabList.map((item, index)=>(
-		    		<View key={index} tabLabel={item.category}>
+			 	{!!tabCategoryArticleList.length && isVisibleTabView && tabCategoryArticleList.map((item, index)=>(
+		    		<Animated.View style={{opacity:1}} key={index} tabLabel={item.category}>
 		    			<ArticleList 
 							navigation={navigation}
 							total={item.total}
@@ -96,7 +140,7 @@ class Home extends React.Component{
 							isMoring={item.isMoring}
 							onEndReached={this.onEndReached.bind(this, index)}
 						/>
-		    		</View>
+		    		</Animated.View>
 			 	))}
 		  	</ScrollableTabView>
 		)

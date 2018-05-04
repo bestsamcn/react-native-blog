@@ -12,6 +12,7 @@ class About extends React.Component{
 	constructor(props){
 		super(props);
 	}
+	//返回
 	goBack(){
 		this.props.navigation.navigate('Home')
 	}

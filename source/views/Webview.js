@@ -49,13 +49,19 @@ class Webview extends Component{
 		this.setState({isLoading:true});
 	}
 	onLoadEnd(){
-		this.setState({isLoading:false});
+		this.timer = setTimeout(()=>{
+			this.setState({isLoading:false});
+		}, 500);
+		
+	}
+	componentWillUnmount(){
+		this.timer && clearTimeout(this.timer);
 	}
 	render(){
 		return(
 			<KeyboardAvoidingView style={[container.view_, bg.white]} behavior="padding">
 				{this.renderWebview()}
-				{this.state.isLoading && <FullLoading type="20" opacity={1}/>}
+				{this.state.isLoading && <FullLoading type="top" opacity={1}/>}
 			</KeyboardAvoidingView>
 		)
 	}

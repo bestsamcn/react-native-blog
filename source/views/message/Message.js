@@ -1,6 +1,6 @@
 import React from 'react';
 import { StackNavigator, navigate } from 'react-navigation';
-import { Button, View, Text, TextInput, KeyboardAvoidingView, Keyboard, TouchableHighlight, ToastAndroid, Dimensions } from 'react-native';
+import { Button, View, Text, TextInput, KeyboardAvoidingView, Animated, Keyboard, TouchableHighlight, ToastAndroid, Dimensions } from 'react-native';
 import { connect } from 'dva/mobile';
 import { FullLoading } from '@/components/common';
 import { HomeHeader } from '@/components/layout/headers';
@@ -20,7 +20,8 @@ class Message extends React.Component{
 			name:'',
 			email:'',
 			content:'',
-			marginBottom:0
+			marginBottom:0,
+
 		}
 	}
 	pushState(){
@@ -82,14 +83,15 @@ class Message extends React.Component{
 		let { isLoading } = this.props.message;
 		let { keybordHeight } = this.props.global;
 		return(
-			<KeyboardAvoidingView behavior="padding" style={[container.view__, padding.a20, {position:'relative', bottom:marginBottom}]} onStartShouldSetResponder={this.onStartShouldSetResponder.bind(this)}>
+			<KeyboardAvoidingView behavior="padding" style={[container.view__, padding.a20, bg.white, {position:'relative', bottom:marginBottom}]} onStartShouldSetResponder={this.onStartShouldSetResponder.bind(this)}>
 				{isLoading && <FullLoading type='30' opacity={0.5}/>}
 				<View style={[margin.top20]} >
 					<Text>Name</Text>
 					<TextInput 
-						style={{height:40, padding:10, marginTop:10, width:'100%', backgroundColor:'#eee', borderWidth:1, borderColor:'#1abc9c'}}
+						style={{height:40, padding:10, marginTop:10, borderRadius:4, width:'100%', backgroundColor:'#fff', borderWidth:1, borderColor:'#1abc9c'}}
 						underlineColorAndroid='transparent'
 						value={name}
+						placeholderTextColor='#ccc'
 						placeholder="你的大名"
 						onChangeText ={this.setInputValue.bind(this, 'name')}
 					/>	
@@ -99,7 +101,8 @@ class Message extends React.Component{
 					<TextInput 
 						value={email}
 						placeholder="你的邮箱"
-						style={{height:40, padding:10, marginTop:10, width:'100%', backgroundColor:'#eee', borderWidth:1, borderColor:'#1abc9c'}}
+						placeholderTextColor='#ccc'
+						style={{height:40, padding:10, marginTop:10, width:'100%', borderRadius:4, backgroundColor:'#fff', borderWidth:1, borderColor:'#1abc9c'}}
 						underlineColorAndroid='transparent'
 						onChangeText ={this.setInputValue.bind(this, 'email')}
 					/>	
@@ -112,10 +115,11 @@ class Message extends React.Component{
 							value={content}
 							multiline={true}
 							placeholder="说点什么"
+							placeholderTextColor='#ccc'
 							onFocus={this.onTextInputFocus.bind(this)}
 							onBlur={this.onTextInputonBlur.bind(this)}
 							numberOfLines={4}
-							style={{height:40, marginTop:10, padding:10, width:'100%', backgroundColor:'#eee', borderWidth:1, borderColor:'#1abc9c'}}
+							style={{height:40, marginTop:10, padding:10, width:'100%', borderRadius:4, backgroundColor:'#fff', borderWidth:1, borderColor:'#1abc9c'}}
 							underlineColorAndroid='transparent'
 						/>	
 					</KeyboardAvoidingView>
@@ -126,7 +130,7 @@ class Message extends React.Component{
 					onPress={this.onPostMesssage.bind(this)}
 					style={[margin.top20, {width:'100%', height:40, marginBottom:keybordHeight}]}
 				>
-					<View style={[flex.center, {width:'100%', height:40, backgroundColor:'#1abc9c'}]}>
+					<View style={[flex.center, {width:'100%', borderRadius:4, height:40, backgroundColor:'#1abc9c'}]}>
 						<Text style={{width:'100%', textAlign:'center', color:'#fff'}}>提交</Text>
 					</View>
 				</TouchableHighlight>

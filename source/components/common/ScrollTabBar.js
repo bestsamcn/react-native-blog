@@ -172,7 +172,6 @@ class ScrollableTabBar extends React.Component {
     //单个页签宽度个计算
     measureTab(page, event) {
         const { x, width, height, } = event.nativeEvent.layout;
-        console.log(width, 'tab width')
         this._tabsMeasurements[page] = {left: x, right: x + width, width, height, };
         this.updateView({value: this.props.scrollValue._value, });
     }
@@ -189,7 +188,6 @@ class ScrollableTabBar extends React.Component {
             left: this.state._leftTabUnderline,
             width: this.state._widthTabUnderline,
         };
-        console.log(this.state._containerWidth, 'ddddddddddddddd')
         return (
             <View
                 style={[styles.container, {backgroundColor: this.props.backgroundColor, }, this.props.style, ]}

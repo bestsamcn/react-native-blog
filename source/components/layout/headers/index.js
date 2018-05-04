@@ -149,30 +149,39 @@ export const SearchHeader = ({navigation})=>{
 }
 
 //首页头部
-export const HomeHeader = ({navigation})=>({
-	headerLeft:(
-		<View style={[flex.startBaseline, margin.left10]}>
-			<Icon name='bold' style={margin.right5} size={26} color='#1abc9c'/>
-			<Text style={[color.black, font.bold, font.size18]}>est</Text>
-		</View>
-	),
-	headerRight:(
-		<TouchableHighlight 
-			style={{padding:15, height:'100%', flex:1, alignItems:'center'}} 
-			onPress={()=>navigation.onHeaderRightClick()} 
-			underlayColor={color.green} 
-			activeOpacity={0.5}
-		>
-			<Icon name='search' size={24} color='#2b4356'/>
-		</TouchableHighlight>
-	),
-	headerStyle:{
-		borderBottomWidth:1, 
-	    elevation: 0,
-	    borderStyle:'solid',
-	    borderBottomColor:'#f6f6f6'
+export const HomeHeader = ({navigation})=>{
+
+	//获取首页头部高度，作为全局高度初始值
+	let onHeaderLayout = e=>{
+		!!navigation.onHeaderLayout && navigation.onHeaderLayout(e.nativeEvent.layout);
 	}
-});
+	return ({
+		headerLeft:(
+			<View style={[flex.startBaseline, margin.left10]}>
+				<Icon name='bold' style={margin.right5} size={26} color='#1abc9c'/>
+				<Text style={[color.black, font.bold, font.size18]}>est</Text>
+			</View>
+		),
+		headerRight:(
+			<TouchableHighlight 
+				onLayout={onHeaderLayout}
+				style={{padding:15, height:'100%', flex:1, alignItems:'center'}} 
+				onPress={()=>navigation.onHeaderRightClick()} 
+				underlayColor={color.green} 
+				activeOpacity={0.5}
+			>
+				<Icon name='search' size={24} color='#2b4356'/>
+			</TouchableHighlight>
+		),
+		headerStyle:{
+			borderBottomWidth:1, 
+		    elevation: 0,
+		    borderStyle:'solid',
+		    borderBottomColor:'#f6f6f6'
+		}
+	})
+	
+};
 
 //浏览器头部
 export const WebHeader = ({navigation})=>{

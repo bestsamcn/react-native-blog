@@ -1,6 +1,6 @@
 import React from 'react';
 import Storage from 'react-native-storage';
-import { AsyncStorage } from 'react-native';
+import { AppRegistry, AsyncStorage } from 'react-native';
 
 
 import dva from 'dva/mobile';
@@ -8,6 +8,7 @@ import Router, { routerMiddleware } from './router';
 import sync from './config/storage';
 import _models from './models';
 
+//缓存
 global.storage = new Storage({
 	size: 1000,
 	storageBackend: AsyncStorage,
@@ -16,6 +17,7 @@ global.storage = new Storage({
 	sync:sync,
 });
 
+//实例
 global.app = dva({
 	onAction:[routerMiddleware],
 	onError(e) {
@@ -23,10 +25,13 @@ global.app = dva({
 	}
 });
 
+//model
 _models(global.app);
 
+//router
 global.app.router(()=><Router/ >);
 
-export default () => {
-	return global.app.start();
-}
+//start
+const start = ()=>global.app.start();
+
+AppRegistry.registerComponent('ReactNativeBlog', ()=>start());

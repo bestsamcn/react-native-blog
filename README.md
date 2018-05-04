@@ -65,7 +65,8 @@ react-native run-android
   	</ScrollableTabView>	
 	```
 - app.model should be unique 导致闪退；
-- 页签下划线不显示，是因为宽度为0的原因，以强制初始值为70
+- 页签下划线不显示，是因为宽度为0的原因，以强制初始值为70, tabs宽度不稳定，直接通过tabs的长度和单个tab宽度相乘拿到
+- header，footer的高度，header通过首页header元素的onLayout拿到，footer查源码可知在手机上是写死49
 
 ## 后续
 给个星星呗...

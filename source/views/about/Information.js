@@ -20,6 +20,7 @@ class Information extends React.Component{
 	onLoadEnd(){
 		this.setState({isLoading:false});
 	}
+	//搜索
 	onHeaderRightClick(){
 		let { hotwordList } = this.props.search;
 		let name = !!hotwordList && !!hotwordList[0] && hotwordList[0].name || HOT_WORD;
@@ -49,7 +50,7 @@ class Information extends React.Component{
 		let baseUrl = 'file:///android_asset/web/index.html#/about';
 		return(
 			<View style={[container.view_]}>
-				{this.state.isLoading && <FullLoading type="20"/>}
+				{this.state.isLoading && <FullLoading type="center"/>}
 				<WebView
 		          	onLoadStart={this.onLoadStart.bind(this)}
 		          	onLoadEnd={this.onLoadEnd.bind(this)}

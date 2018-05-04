@@ -1,7 +1,10 @@
-import { Dimensions, ActivityIndicator, View } from 'react-native';
+import { Dimensions, ActivityIndicator, View, Platform } from 'react-native';
 import React, { Component } from 'react';
 import { flex, color, bg, container } from '@/styles/base';
+import { connect } from 'dva/mobile';
 import PropTypes from 'prop-types';
+
+@connect(state=>({...state}))
 class FullLoading extends Component{
 	static proptypes = {
 		animating:PropTypes.bool,
@@ -14,14 +17,17 @@ class FullLoading extends Component{
 		animating:true,
 		color:'#1abc9c',
 		size:'small',
-		type:'10',
+		type:'full',
 		opacity:1
 	}
 	constructor(props){
 		super(props);
 		this.state={
 			height:0,
-			width:0
+			width:0,
+			headerHeight:Platform.os=='ios' ? 44 : 56,
+			statusHeight:Platform.os=='ios' ? 20 : 24,
+			footerHeight:49
 		}
 	}
 	componentDidMount(){
@@ -30,11 +36,14 @@ class FullLoading extends Component{
 	}
 	render(){
 		let { opacity, type } = this.props;
-		let { height, width } = this.state;
-		if(type == '20'){
-			height = height - 65;
-		}else if(type == '30'){
-			height = height - 130;
+		let { height, width, headerHeight, footerHeight, statusHeight } = this.state;
+		height = height - statusHeight;
+		if(type == 'top'){
+			height = height - headerHeight;
+		}else if(type == 'bottom'){
+			height = height - footerHeight;
+		}else if(type == 'center'){
+			height = height - headerHeight - footerHeight;
 		}
 		return(
 			<View 
