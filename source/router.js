@@ -123,10 +123,17 @@ class Router extends React.Component{
         initializeListeners('root', this.props.router);
         
 		//初始化数据
-		let { data } = await getCategoryList();
-		this.props.dispatch({type:'global/getCategoryList', params:{data}});
-		await delay(500);
-        await SplashScreen.hide();
+		try{
+			let { data } = await getCategoryList();
+			this.props.dispatch({type:'global/getCategoryList', params:{data}});
+			await delay(500);
+	        await SplashScreen.hide();
+		}catch(e){
+			this.props.dispatch({type:'global/getCategoryList', params:{data:[]}});
+			await delay(500);
+	        await SplashScreen.hide();
+		}
+		
     }
     componentWillMount(){
     	this.checkNetwork();

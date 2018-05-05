@@ -22,6 +22,6 @@ public class MainActivity extends ReactActivity {
     protected void onCreate(Bundle savedInstanceState) {        // HERE
         SplashScreen.show(this, true);     // HERE    
         super.onCreate(savedInstanceState); 
-        ShareModule.initActivity(this);  //share                 
+        // ShareModule.initActivity(this);  //share                 
     }
 }
