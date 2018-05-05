@@ -46,7 +46,7 @@ public class MainApplication extends Application implements ReactApplication {
     SoLoader.init(this, /* native exopackage */ false);
     //share
     Config.shareType = "react native";  
-    UMShareAPI.get(this); 
+    // UMShareAPI.get(this); 
   }
 
   // 配置平台 
