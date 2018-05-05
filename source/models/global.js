@@ -61,7 +61,9 @@ export default {
 				});
 				console.log(_tabCategoryArticleList, 'sucess load')
 				global.app._store.dispatch({type:'home/setState', payload:{tabCategoryArticleList:_tabCategoryArticleList}});
-				global.app._store.dispatch({type:'home/getTabArticleList', params:{isRefresh:true, currentTabIndex:0}});
+
+				//缓存为空则请求
+				!!_tabCategoryArticleList[0].article.length && global.app._store.dispatch({type:'home/getTabArticleList', params:{isRefresh:true, currentTabIndex:0}});
 				global.app._store.dispatch({type:'global/setState', payload:{categoryList:data}});
 				params.callback && params.callback();
 			}

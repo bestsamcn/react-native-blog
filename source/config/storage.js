@@ -36,7 +36,5 @@ const sync ={
 		let { resolve, reject } = params;
 		resolve && resolve({tabCategoryArticleList:[]});
 	},
-
-
 }
 export default sync;
