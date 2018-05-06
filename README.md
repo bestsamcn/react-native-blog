@@ -16,22 +16,22 @@ React-Native-Blog是一个基于`ReactNative`的移动端项目,另有[Vue版本
 
 ## 实现
 
-- [x] 分类文章列表与搜索记录缓存
-- [x] webview网页通信
-- [X] tabNavigator+stackNavigator使用
-- [x] 键盘弹起控制与tabbar控制
-- [x] 启动屏
-- [x] redux控制导航
-- [x] 分类与分页
-- [] 分享
-- [] tabbar动画显示与隐藏
-- [] 读取缓存状态页签动画显示内容
-- [] webview秒通信
-- [] 点击webview图片，滚动预览
+[x] 分类文章列表与搜索记录缓存
+[x] webview网页通信
+[X] tabNavigator+stackNavigator使用
+[x] 键盘弹起控制与tabbar控制
+[x] 启动屏
+[x] redux控制导航
+[x] 分类与分页
+[] 分享
+[] tabbar动画显示与隐藏
+[] 读取缓存状态页签动画显示内容
+[] webview秒通信
+[] 点击webview图片，滚动预览
 
 ## 开发
 1. 克隆安装依赖
-	```
+    ```
 	git clone https://github.com/bestsamcn/react-native-blog.git
 
 	cd react-native-blog
