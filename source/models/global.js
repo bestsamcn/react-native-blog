@@ -36,7 +36,7 @@ export default {
 
 				//默认分类
 				// data.unshift({category:'全部', name:'', articleList:[], pageIndex:1, total:11, isRefreshing:false, isMoring:false});
-				data.unshift({category:'全部', name:''});
+				!data.some(item=>(item.category == '全部')) && data.unshift({category:'全部', name:''});
 				data.map((item, index)=>{
 					let _item = {};
 

@@ -6,3 +6,4 @@ export const ARTICLE_URL = 'http://blog.bestsamcn.me/article/detail/';
 
 export const PAGE_SIZE = 10;
 export const HOT_WORD = 'react';
+export const TIME_OUT = 30000;

@@ -64,17 +64,25 @@ export default {
 
 				//请求
 				currentCategoryArticle.pageIndex = 1;
-				let res = yield call(getArticleList, {category:currentCategoryArticle.name, pageIndex:currentCategoryArticle.pageIndex, pageSize:PAGE_SIZE});
-				currentCategoryArticle.articleList = res.data;
-				currentCategoryArticle.isRefreshing = false;
-				currentCategoryArticle.total = res.total;
-				yield put({type:'setState', payload:{currentTabIndex, tabCategoryArticleList:_tabCategoryArticleList}});
+				try{
+					let res = yield call(getArticleList, {category:currentCategoryArticle.name, pageIndex:currentCategoryArticle.pageIndex, pageSize:PAGE_SIZE});
+					currentCategoryArticle.articleList = res.data;
+					currentCategoryArticle.isRefreshing = false;
+					currentCategoryArticle.total = res.total;
+					yield put({type:'setState', payload:{currentTabIndex, tabCategoryArticleList:_tabCategoryArticleList}});
 
-				//缓存
-				global.storage.save({key:'tabCategoryArticleList', data:{tabCategoryArticleList:_tabCategoryArticleList}});
-				
-				//回调
-				params.callback && params.callback();
+					//缓存
+					global.storage.save({key:'tabCategoryArticleList', data:{tabCategoryArticleList:_tabCategoryArticleList}});
+					
+					//回调
+					params.callback && params.callback();
+				}catch(e){
+
+					//状态
+					currentCategoryArticle.isRefreshing = false;
+					_tabCategoryArticleList.splice(currentTabIndex, 1, currentCategoryArticle);
+					yield put({type:'setState', payload:{currentTabIndex, tabCategoryArticleList:_tabCategoryArticleList}});
+				}
 			}else{
 
 				//状态

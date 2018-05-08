@@ -1,4 +1,4 @@
-import { API } from '../config';
+import { API, TIME_OUT } from '../config';
 import { NetInfo, ToastAndroid } from 'react-native';
 
 
@@ -17,7 +17,11 @@ export default async function request(url, options={}) {
         error.response = response;
         throw error;
     }
-    return new Promise((resolve, reject)=>{
+    let timer = null;
+    options.timeout = 30000;
+
+    //请求
+    let _fetch =  new Promise((resolve, reject)=>{
         options.headers = {};
         options.params = options.params || {};
         options.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
@@ -50,10 +54,12 @@ export default async function request(url, options={}) {
 
         //返回
         function checkCode(data) {
+            console.log(data, 'ssssssssssss')
             if (data.retCode != 0) {
                 ToastAndroid.show(data.msg || '异常', 1000);
                 return reject(data.msg || '异常');
             }
+            timer && clearTimeout(timer);
             return resolve(data);
         }
         fetch(API + url, options)
@@ -62,4 +68,18 @@ export default async function request(url, options={}) {
         .then(checkCode)
         .catch(err => reject(err));
     });
+
+    //超时
+    let _timeout = new Promise((resolve, reject)=> {
+            timer = setTimeout(() =>{
+                ToastAndroid.show('请求超时', 1000);
+                return reject(new Error('request timeout'))
+            }, TIME_OUT || options.timeout);
+        } 
+    );
+
+    return Promise.race([
+        _fetch,
+        _timeout
+    ]);
 }
