@@ -54,7 +54,6 @@ export default async function request(url, options={}) {
 
         //返回
         function checkCode(data) {
-            console.log(data, 'ssssssssssss')
             if (data.retCode != 0) {
                 ToastAndroid.show(data.msg || '异常', 1000);
                 return reject(data.msg || '异常');

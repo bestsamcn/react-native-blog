@@ -31,9 +31,10 @@ class Information extends React.Component{
 	injectJavaScript(){
 		return  `
 	    	var oLink = document.getElementById('github-link');
-	        oLink.onclick = function(event){
-	            window.postMessage(this.href);
-	            event.preventDefault();
+	        oLink.onclick= function(){
+	        	window.postMessage(this.getAttribute('url'));
+	        	document.postMessage(this.getAttribute('url'));
+	        	return false;
 	        }
 		`
 	}
@@ -46,7 +47,7 @@ class Information extends React.Component{
 		this.props.navigation.onHeaderRightClick = this.onHeaderRightClick.bind(this);
 	}
 	render(){
-		// let baseUrl = 'http://10.0.1.110:8080/about';
+		// let baseUrl = 'http://192.168.0.103:8080/#/about';
 		let baseUrl = 'file:///android_asset/web/index.html#/about';
 		return(
 			<View style={[container.view_]}>
