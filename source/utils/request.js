@@ -1,5 +1,6 @@
 import { API, TIME_OUT } from '../config';
 import { NetInfo, ToastAndroid } from 'react-native';
+import { delay } from '@/utils';
 
 
 
@@ -18,7 +19,7 @@ export default async function request(url, options={}) {
         throw error;
     }
     let timer = null;
-    options.timeout = 30000;
+    options.timeout = 5000;
 
     //请求
     let _fetch =  new Promise((resolve, reject)=>{
@@ -53,13 +54,14 @@ export default async function request(url, options={}) {
         }
 
         //返回
-        function checkCode(data) {
-            console.log(data, 'ssssssssssss')
+        async function  checkCode(data) {
             if (data.retCode != 0) {
                 ToastAndroid.show(data.msg || '异常', 1000);
                 return reject(data.msg || '异常');
             }
-            timer && clearTimeout(timer);
+            
+            
+            // timer && clearTimeout(timer);
             return resolve(data);
         }
         fetch(API + url, options)
@@ -72,6 +74,7 @@ export default async function request(url, options={}) {
     //超时
     let _timeout = new Promise((resolve, reject)=> {
             timer = setTimeout(() =>{
+                console.log('超时');
                 ToastAndroid.show('请求超时', 1000);
                 return reject(new Error('request timeout'))
             }, TIME_OUT || options.timeout);

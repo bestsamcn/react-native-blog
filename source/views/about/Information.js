@@ -14,12 +14,17 @@ class Information extends React.Component{
 			isLoading:false
 		}
 	}
+
+	//加载开始
 	onLoadStart(){
 		this.setState({isLoading:true});
 	}
+
+	//加载结束
 	onLoadEnd(){
 		this.setState({isLoading:false});
 	}
+
 	//搜索
 	onHeaderRightClick(){
 		let { hotwordList } = this.props.search;
@@ -27,6 +32,7 @@ class Information extends React.Component{
 		this.props.navigation.navigate({routeName:'Search', params:{hotword:name}})
 
 	}
+
 	//注入脚本
 	injectJavaScript(){
 		return  `
@@ -37,6 +43,7 @@ class Information extends React.Component{
 	        }
 		`
 	}
+	
 	//接受网页消息
 	onMessage(e){
 		console.log(e)
